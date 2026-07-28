@@ -90,8 +90,8 @@ export const releases: Release[] = [
   {
     product: "cocoa",
     channel: "stable",
-    version: "",
-    dateISO: "",
+    version: "7.0.4",
+    dateISO: "2026-07-28",
     releasePageUrl: "",
     zipballUrl: "",
     highlights: [
@@ -120,8 +120,8 @@ export const releases: Release[] = [
   {
     product: "shadow",
     channel: "stable",
-    version: "",
-    dateISO: "",
+    version: "7.0.4",
+    dateISO: "2026-07-28",
     releasePageUrl: "",
     zipballUrl: "",
     highlights: [
