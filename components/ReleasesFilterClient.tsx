@@ -59,7 +59,7 @@ function ReleasesFilterInner({ releases }: ReleasesFilterClientProps) {
               Cocoa
             </button>
             <button
-              className={`platform-pill ${product === "shadow_lite" ? "platform-pill--active" : ""}`}
+              className={`platform-pill ${product === "shadow" ? "platform-pill--active" : ""}`}
               onClick={() => setProduct("shadow_lite")}
               aria-pressed={product === "shadow_lite"}
               type="button"
