@@ -16,7 +16,7 @@
 /** Supported Darkelf products */
 export type ProductId =
   | "cocoa"
-  | "shadow_lite"
+  | "shadow"
   | "osint_ai";
 
 /** Release channels */
@@ -139,15 +139,14 @@ export const releases: Release[] = [
       },
     ],
   },
+  
   {
-{
   product: "shadow",
   channel: "stable",
   version: "",
   dateISO: "",
   releasePageUrl: "",
   zipballUrl: "",
-
   highlights: [
     "Privacy-first browser built with PySide6 and QtWebEngine",
     "Ephemeral browsing with no persistent cookies, cache, or history",
@@ -157,9 +156,7 @@ export const releases: Release[] = [
     "Request interception and hardened browsing protections",
     "Cross-platform support for Windows, Linux, and macOS",
   ],
-
   notesMarkdown: "",
-
   artifacts: [
     {
       platform: "windows",
