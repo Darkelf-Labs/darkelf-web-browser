@@ -35,25 +35,27 @@ export const REPO_CONFIG = {
 export const PRODUCT_META = {
   cocoa: {
     displayName: "Darkelf Cocoa",
-    tagline: "Cocoa 4.0 — macOS Only · Security Containment & Minimization",
+    tagline: "Native macOS Privacy Browser",
     shortDescription:
-      "macOS-native (Cocoa/WebKit) browser. Reduced attack surface, non-persistent workflows, and hardware-level isolation. macOS only.",
+      "Native macOS browser built with Cocoa, WebKit, and PyObjC. Designed for ephemeral browsing, privacy by default, first-party isolation, tracker blocking, and hardened WebKit security.",
     color: "var(--accent)",
     colorRgb: "54,255,154",
   },
+
   shadow: {
     displayName: "Darkelf Shadow",
-    tagline: "PySide6 Rewrite — Linux & Windows",
+    tagline: "Cross-Platform Privacy Browser",
     shortDescription:
-      "QtWebEngine/PySide6 rewrite for Linux and Windows. Hardened sandbox, request interception, no persistence, no WebRTC.",
+      "Privacy-first browser built with PySide6 and QtWebEngine. Features ephemeral browsing, tracker and advertisement blocking, hardened network protections, MiniAI Sentinel, and cross-platform support for Windows, Linux, and macOS.",
     color: "var(--accent-2)",
     colorRgb: "0,234,255",
   },
+
   osint_ai: {
     displayName: "Darkelf OSINT AI",
-    tagline: "AI-Assisted OSINT — Windows · Linux · macOS · Python + Ollama",
+    tagline: "AI-Assisted Open-Source Intelligence",
     shortDescription:
-      "AI-powered Open-Source Intelligence assistant. Combines traditional OSINT workflows with local AI reasoning via Ollama. Modular, ethical, and built for investigators.",
+      "AI-powered OSINT toolkit combining traditional investigative workflows with local AI reasoning for privacy-conscious research and analysis.",
     color: "var(--accent-4)",
     colorRgb: "255,152,0",
   },
