@@ -76,6 +76,16 @@ jobs:
       - name: Install dependencies (clean install)
         run: npm ci
 
+      - name: Show dependency versions
+        run: |
+          node -v
+          npm -v
+          npm ls next
+          npm ls sharp
+          npm ls postcss
+          npm ls @babel/core
+          npm ls js-yaml
+
       - name: Audit dependencies for vulnerabilities
         run: npm audit --audit-level=high
         continue-on-error: false
