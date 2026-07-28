@@ -48,7 +48,7 @@ export async function generateMetadata({
 
 export default async function ReleaseDetailPage({ params }: ReleaseDetailParams) {
   const resolvedParams = await params;
-  const validProducts: ProductId[] = ["cocoa", "shadow_lite", "osint_ai"];
+  const validProducts: ProductId[] = ["cocoa", "shadow", "osint_ai"];
   if (!validProducts.includes(resolvedParams.product as ProductId)) {
     notFound();
   }
