@@ -60,7 +60,7 @@ export function DownloadCenterClient({
           highlightPlatform={highlight}
         />
         <ProductCard
-          productId="shadow_lite"
+          productId="shadow"
           release={shadowRelease}
           highlightPlatform={highlight}
         />
