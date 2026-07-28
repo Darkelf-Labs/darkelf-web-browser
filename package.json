@@ -24,11 +24,6 @@
     "typescript": "5.4.5"
   },
   "overrides": {
-    "@babel/core": "^7.29.2",
-    "brace-expansion": "^4.0.1",
-    "js-yaml": "^4.1.1",
-    "minimatch": "^10.2.1",
-    "postcss": "^8.5.17",
     "sharp": "^0.35.3"
   }
 }
