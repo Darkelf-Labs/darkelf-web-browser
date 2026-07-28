@@ -48,59 +48,37 @@ export type FileType =
   | "tar.gz";
 
 export interface Artifact {
-  name: string;
-
   platform: Platform;
 
-  arch: "x64" | "arm64" | "universal";
+  arch: Architecture;
 
   fileType: FileType;
+
+  url: string;
 
   sizeBytes: number;
 
   sha256: string;
 
-  downloadUrl: string;
-
-  signatureUrl?: string;
-
-  verified: boolean;
-
-  notarized?: boolean;
+  notesUrl?: string;
 }
 
 export interface Release {
   product: ProductId;
 
-  displayName: string;
-
   channel: Channel;
 
   version: string;
 
-  latestTag: string;
-
-  prerelease: boolean;
-
-  draft: boolean;
-
-  publishedAt: string;
-
-  releaseDate: string;
-
-  githubRepo: string;
+  dateISO: string;
 
   releasePageUrl: string;
 
-  latestDownloadUrl: string;
-
-  latestNotesUrl: string;
-
-  latestSourceUrl: string;
-
-  changelog: string[];
+  zipballUrl: string;
 
   highlights: string[];
+
+  notesMarkdown?: string;
 
   artifacts: Artifact[];
 }
