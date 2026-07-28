@@ -18,11 +18,11 @@ export const REPO_CONFIG = {
     url: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser",
     releasesUrl: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/releases",
   },
-  shadow_lite: {
+  shadow: {
     org: "Darkelf2024",
-    repo: "Darkelf-Shadow",
-    url: "https://github.com/Darkelf2024/Darkelf-Shadow",
-    releasesUrl: "https://github.com/Darkelf2024/Darkelf-Shadow/releases",
+    repo: "Darkelf-Shadow-CE",
+    url: "https://github.com/Darkelf2024/Darkelf-Shadow-CE",
+    releasesUrl: "https://github.com/Darkelf2024/Darkelf-Shadow-CE/releases",
   },
   osint_ai: {
     org: "Darkelf2024",
@@ -41,7 +41,7 @@ export const PRODUCT_META = {
     color: "var(--accent)",
     colorRgb: "54,255,154",
   },
-  shadow_lite: {
+  shadow: {
     displayName: "Darkelf Shadow",
     tagline: "PySide6 Rewrite — Linux & Windows",
     shortDescription:
