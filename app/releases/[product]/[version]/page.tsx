@@ -1,4 +1,3 @@
-export const dynamicParams = false;
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
@@ -14,6 +13,8 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { ArtifactTable } from "@/components/ArtifactTable";
 import { VerifySteps } from "@/components/VerifySteps";
 import type { ProductId } from "@/data/releases";
+
+export const dynamicParams = false;
 
 interface ReleaseDetailParams {
   params: Promise<{ product: string; version: string }>;
