@@ -9,42 +9,100 @@
 // TODO: Replace every SHA256 value with the real hex digest of the artifact
 // ---------------------------------------------------------------------------
 
-export type ProductId = "cocoa" | "shadow_lite" | "osint_ai";
-export type Channel = "stable" | "nightly";
-export type Platform = "windows" | "linux" | "macos";
-export type FileType = "exe" | "appimage" | "dmg" | "zip";
+// ---------------------------------------------------------------------------
+// Darkelf Download Center — Core Types
+// ---------------------------------------------------------------------------
+
+/** Supported Darkelf products */
+export type ProductId =
+  | "cocoa"
+  | "shadow_lite"
+  | "osint_ai";
+
+/** Release channels */
+export type Channel =
+  | "stable"
+  | "beta"
+  | "alpha"
+  | "nightly"
+  | "lts";
+
+/** Supported operating systems */
+export type Platform =
+  | "windows"
+  | "linux"
+  | "macos";
+
+/** Supported CPU architectures */
+export type Architecture =
+  | "x64"
+  | "arm64"
+  | "universal";
+
+/** Supported downloadable artifact types */
+export type FileType =
+  | "exe"
+  | "appimage"
+  | "dmg"
+  | "zip"
+  | "tar.gz";
 
 export interface Artifact {
+  name: string;
+
   platform: Platform;
-  arch: "x64";
+
+  arch: "x64" | "arm64" | "universal";
+
   fileType: FileType;
-  /** Full GitHub Releases asset URL — ONLY github.com URLs are allowed. */
-  url: string;
-  /** Uncompressed file size in bytes. */
+
   sizeBytes: number;
-  /** Lowercase hex SHA-256 of the artifact file. */
+
   sha256: string;
-  /** Optional detached GPG / Minisign signature URL. */
-  signature?: string;
-  /** Human-readable release notes URL (GitHub Releases tag page). */
-  notesUrl?: string;
+
+  downloadUrl: string;
+
+  signatureUrl?: string;
+
+  verified: boolean;
+
+  notarized?: boolean;
 }
 
 export interface Release {
   product: ProductId;
+
+  displayName: string;
+
   channel: Channel;
+
   version: string;
-  /** ISO-8601 date, e.g. "2026-02-01" */
-  dateISO: string;
-  /** Short bullet highlights shown on product cards and detail pages. */
+
+  latestTag: string;
+
+  prerelease: boolean;
+
+  draft: boolean;
+
+  publishedAt: string;
+
+  releaseDate: string;
+
+  githubRepo: string;
+
+  releasePageUrl: string;
+
+  latestDownloadUrl: string;
+
+  latestNotesUrl: string;
+
+  latestSourceUrl: string;
+
+  changelog: string[];
+
   highlights: string[];
-  /** Optional markdown changelog — render safely (no raw HTML). */
-  notesMarkdown?: string;
+
   artifacts: Artifact[];
-  /** GitHub release page URL (html_url from GitHub API). */
-  releasePageUrl?: string;
-  /** Source zip download URL (github.com/…/archive/refs/tags/vX.Y.Z.zip). */
-  zipballUrl?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -54,114 +112,81 @@ export const releases: Release[] = [
   {
     product: "cocoa",
     channel: "stable",
-    version: "4.4.3",
-    dateISO: "2026-03-18",
-    releasePageUrl: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/releases/tag/4.4.3",
-    zipballUrl: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/archive/refs/tags/4.4.3.zip",
+    version: "",
+    dateISO: "",
+    releasePageUrl: "",
+    zipballUrl: "",
     highlights: [
-      "Secure Snapshot (Cmd+S): strips JS → static HTML, saves locally; PDF export optional",
-      "TLS indicator — green on HTTPS, white on internal pages, red when blocked",
-      "Canvas hardening with per-session rotation signatures",
-      "Tab isolation + selective script / resource / tracker blocking (~100 rules, scalable)",
-      "Minimal UX — non-persistent workflow, nothing lingers after close",
+      "Native macOS browser built with Cocoa, WebKit and PyObjC",
+      "Ephemeral browsing with no persistent cookies, cache or history",
+      "Secure Snapshot with optional PDF export",
+      "TLS security indicator and certificate awareness",
+      "Canvas fingerprint hardening with per-session randomization",
+      "First-party isolation and tracker protection",
+      "MiniAI Sentinel security monitoring",
     ],
-    notesMarkdown: `## Darkelf Cocoa 4.4.3\n\n### What's New\n- Cocoa 4.x release with full security containment model\n- Secure Snapshot feature introduced (Cmd+S)\n- TLS indicator now shows block state in red\n- Canvas per-session rotation enabled by default\n\n### Known Issues\n- YouTube fullscreen may be impacted by custom toolbar overlay; toolbar rework in progress`,
+    notesMarkdown: "",
     artifacts: [
       {
         platform: "macos",
-        arch: "x64",
+        arch: "universal",
         // Source archive until a notarized .dmg build is published.
-        fileType: "zip",
-        url: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/archive/refs/tags/4.4.3.zip",
-        sizeBytes: 48_234_567,
-        sha256: "TODO_SHA256_PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH_BEFORE_RELEASE",
-        notesUrl: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/releases/tag/4.4.3",
-      },
-    ],
-  },
-  {
-    product: "shadow_lite",
-    channel: "nightly",
-    version: "0.1.0-nightly",
-    dateISO: "2026-02-15",
-    releasePageUrl: "https://github.com/Darkelf2024/Darkelf-Shadow/releases",
-    zipballUrl: "https://github.com/Darkelf2024/Darkelf-Shadow/archive/refs/heads/main.zip",
-    highlights: [
-      "Tab isolation + hardened sandbox (PySide6 / QtWebEngine rewrite)",
-      "Request interception via QWebEngineUrlRequestInterceptor + injection-based mitigation",
-      "Non-persistent: cookies, cache, and history wiped on shutdown",
-      "No WebRTC — no downloads, no bookmarks (by design)",
-      "Disk writes capped to a strict folder; full wipe on shutdown",
-    ],
-    notesMarkdown: `## Darkelf Shadow Lite 0.1.0-nightly\n\n### Status\nRewrite in progress — PySide6 target (Linux + Windows). **Nightly channel only** — not yet production-ready.\n\n### What's New\n- Initial PySide6 rewrite checkpoint\n- QWebEngineUrlRequestInterceptor wired up\n- Non-persistent session enforced at runtime\n\n### Planned (Next Steps)\n- Randomized canvas signatures\n- Auto-hash archive for session dumps\n\n### Notes\n- YouTube fullscreen expected to work better than Cocoa build (no custom toolbar overlay)`,
-    artifacts: [
-      {
-        platform: "windows",
-        arch: "x64",
-        fileType: "exe",
-        // TODO: replace with real asset URL
-        url: "https://github.com/Darkelf2024/Darkelf-Shadow/releases/download/TODO_VERSION/DarkelfShadowLite-TODO_windows-x64.exe",
-        sizeBytes: 38_534_567,
-        // TODO: replace with real SHA-256 hex digest
-        sha256: "TODO_SHA256_PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH_BEFORE_RELEASE",
-        notesUrl: "https://github.com/Darkelf2024/Darkelf-Shadow/releases/tag/v0.1.0-nightly",
-      },
-      {
-        platform: "linux",
-        arch: "x64",
-        fileType: "appimage",
-        // TODO: replace with real asset URL
-        url: "https://github.com/Darkelf2024/Darkelf-Shadow/releases/download/TODO_VERSION/DarkelfShadowLite-TODO_linux-x64.AppImage",
-        sizeBytes: 42_234_567,
-        // TODO: replace with real SHA-256 hex digest
-        sha256: "TODO_SHA256_PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH_BEFORE_RELEASE",
-        notesUrl: "https://github.com/Darkelf2024/Darkelf-Shadow/releases/tag/v0.1.0-nightly",
-      },
-    ],
-  },
-  {
-    product: "osint_ai",
-    channel: "nightly",
-    version: "0.1.0-alpha",
-    dateISO: "2026-02-01",
-    releasePageUrl: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai/releases",
-    zipballUrl: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai/archive/refs/heads/main.zip",
-    highlights: [
-      "AI-assisted analysis — leverages local Ollama models to interpret and correlate OSINT data",
-      "Multi-source intelligence — domains, usernames, emails, IPs, and social platforms",
-      "Structured intelligence output — actionable insights instead of raw, unfiltered data",
-      "Modular & extensible architecture — easy to expand with new sources or analysis modules",
-      "Ethical-first design — focused strictly on publicly available information",
-    ],
-    notesMarkdown: `## Darkelf OSINT AI 0.1.0-alpha\n\n### What Is This?\nAI-powered Open-Source Intelligence assistant. Combines traditional OSINT workflows with AI-driven reasoning via Ollama.\n\n### Requirements\n- Python 3.9 or newer\n- Ollama installed locally (brew install ollama)\n- pip install -r requirements.txt\n\n### Installation\n\`\`\`bash\ngit clone https://github.com/Darkelf2024/Darkelf-OSINT-Ai.git\ncd Darkelf-OSINT-Ai\npip install -r requirements.txt\npython "Darkelf OSINT Ai.py"\n\`\`\`\n\n### Roadmap\n- Advanced CLI interface\n- PDF / Markdown / JSON report export\n- Data visualization and relationship mapping\n- Expanded OSINT source coverage`,
-    artifacts: [
-      {
-        platform: "windows",
-        arch: "x64",
-        fileType: "exe",
-        url: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai/releases/download/TODO_VERSION/DarkelfOSINT-AI-TODO_windows-x64.exe",
-        sizeBytes: 0,
-        sha256: "TODO_SHA256_PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH_BEFORE_RELEASE",
-        notesUrl: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai",
-      },
-      {
-        platform: "linux",
-        arch: "x64",
-        fileType: "appimage",
-        url: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai/releases/download/TODO_VERSION/DarkelfOSINT-AI-TODO_linux-x64.AppImage",
-        sizeBytes: 0,
-        sha256: "TODO_SHA256_PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH_BEFORE_RELEASE",
-        notesUrl: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai",
-      },
-      {
-        platform: "macos",
-        arch: "x64",
         fileType: "dmg",
-        url: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai/releases/download/TODO_VERSION/DarkelfOSINT-AI-TODO_macos-x64.dmg",
+        url: "",
         sizeBytes: 0,
-        sha256: "TODO_SHA256_PLACEHOLDER_REPLACE_WITH_ACTUAL_HASH_BEFORE_RELEASE",
-        notesUrl: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai",
+        sha256: "",
+        notesUrl: "",
       },
     ],
   },
-];
+  {
+{
+  product: "shadow",
+  channel: "stable",
+  version: "",
+  dateISO: "",
+  releasePageUrl: "",
+  zipballUrl: "",
+
+  highlights: [
+    "Privacy-first browser built with PySide6 and QtWebEngine",
+    "Ephemeral browsing with no persistent cookies, cache, or history",
+    "Integrated tracker, advertisement, and malicious content blocking",
+    "MiniAI Sentinel security monitoring and threat detection",
+    "WebRTC disabled by default to reduce IP address leakage",
+    "Request interception and hardened browsing protections",
+    "Cross-platform support for Windows, Linux, and macOS",
+  ],
+
+  notesMarkdown: "",
+
+  artifacts: [
+    {
+      platform: "windows",
+      arch: "x64",
+      fileType: "exe",
+      url: "",
+      sizeBytes: 0,
+      sha256: "",
+      notesUrl: "",
+    },
+    {
+      platform: "linux",
+      arch: "x64",
+      fileType: "appimage",
+      url: "",
+      sizeBytes: 0,
+      sha256: "",
+      notesUrl: "",
+    },
+    {
+      platform: "macos",
+      arch: "universal",
+      fileType: "dmg",
+      url: "",
+      sizeBytes: 0,
+      sha256: "",
+      notesUrl: "",
+    },
+  ],
+},
