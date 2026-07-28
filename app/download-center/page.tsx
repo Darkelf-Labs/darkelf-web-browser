@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 export default function DownloadCenterPage() {
   const cocoaRelease = getLatestRelease("cocoa");
-  const shadowRelease = getLatestRelease("shadow_lite");
+  const shadowRelease = getLatestRelease("shadow");
   const osintAiRelease = getLatestRelease("osint_ai");
 
   return (
