@@ -10,7 +10,7 @@
     "serve": "npx --yes serve out -l 3000"
   },
   "dependencies": {
-    "bootstrap-icons": "1.11.3",
+    "bootstrap-icons": "1.13.1",
     "next": "^16.2.11",
     "react": "19.2.8",
     "react-dom": "19.2.8"
