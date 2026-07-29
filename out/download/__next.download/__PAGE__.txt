@@ -1,7 +1,0 @@
-1:"$Sreact.fragment"
-2:I[42724,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0moo5gylhkgz4.js","/_next/static/chunks/008hfdn0e4x-~.js"],"Nav"]
-3:I[32118,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0moo5gylhkgz4.js","/_next/static/chunks/008hfdn0e4x-~.js"],"DownloadPageClient"]
-4:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0moo5gylhkgz4.js"],"OutletBoundary"]
-5:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[[["$","div",null,{"className":"orb one","aria-hidden":"true"}],["$","div",null,{"className":"orb two","aria-hidden":"true"}],["$","$L2",null,{"activePath":"/releases"}],["$","main",null,{"children":["$","$L3",null,{}]}],["$","footer",null,{"children":["© 2026 Dr. Kevin Moore — MIT Licensed",["$","div",null,{"className":"line","children":"Built for those who refuse to be watched."}]]}]],[["$","script","script-0",{"src":"/_next/static/chunks/008hfdn0e4x-~.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"2bdvrwf1doIY24BL8zaae"}
-6:null
