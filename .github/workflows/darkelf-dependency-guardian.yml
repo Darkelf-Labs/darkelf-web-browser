@@ -1,0 +1,48 @@
+name: Darkelf Dependency Guardian
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+  pull_request:
+    branches:
+      - main
+      - master
+      - dev
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  guardian:
+    name: Dependency Compatibility Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install Guardian
+        run: |
+          python -m pip install --upgrade pip
+          pip install git+https://github.com/Darkelf-Labs/Darkelf-Dependency-Guardian.git
+
+      - name: Validate Project
+        run: guardian validate
+
+      - name: Dependency Scan
+        run: guardian scan
+
+      - name: Compatibility Report
+        run: guardian doctor
+
+      - name: Safe Update Analysis
+        run: guardian update
