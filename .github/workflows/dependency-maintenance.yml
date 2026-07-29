@@ -1,4 +1,4 @@
-name: Dependency Maintenance
+name: Darkelf Dependency Maintenance
 
 on:
   schedule:
