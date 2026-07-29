@@ -1,6 +1,6 @@
 import nextVitals from "eslint-config-next/core-web-vitals";
 
-export default [
+const config = [
   ...nextVitals,
   {
     languageOptions: {
@@ -14,3 +14,5 @@ export default [
     },
   },
 ];
+
+export default config;
