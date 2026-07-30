@@ -8,13 +8,11 @@ import { PlatformPills, useDetectedPlatform } from "@/components/PlatformPills";
 interface DownloadCenterClientProps {
   cocoaRelease: Release | undefined;
   shadowRelease: Release | undefined;
-  osintAiRelease: Release | undefined;
 }
 
 export function DownloadCenterClient({
   cocoaRelease,
   shadowRelease,
-  osintAiRelease,
 }: DownloadCenterClientProps) {
   const detected = useDetectedPlatform();
   const [selected, setSelected] = useState<Platform | null>(null);
@@ -62,11 +60,6 @@ export function DownloadCenterClient({
         <ProductCard
           productId="shadow"
           release={shadowRelease}
-          highlightPlatform={highlight}
-        />
-        <ProductCard
-          productId="osint_ai"
-          release={osintAiRelease}
           highlightPlatform={highlight}
         />
       </div>
