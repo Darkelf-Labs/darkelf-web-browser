@@ -1,25 +1,14 @@
 // ---------------------------------------------------------------------------
-// Darkelf Download Center — Release Data Store
+// Darkelf Release Notes Data Store
 // ---------------------------------------------------------------------------
-// TODO: Replace all TODO_* placeholders with real values before publishing.
-// TODO: Replace TODO_ORG with the GitHub organisation slug, e.g. "Darkelf2024"
-// TODO: Replace TODO_COCOA_REPO with the Cocoa repo name
-// TODO: Replace TODO_SHADOW_REPO with the Shadow Lite repo name
-// TODO: Replace TODO_SHADOW_OSINT_REPO with the Darkelf Shadow (OSINT) repo name
-// TODO: Replace every SHA256 value with the real hex digest of the artifact
+// This file powers the Release History pages.
+// Downloads are managed separately by the Download Center.
 // ---------------------------------------------------------------------------
 
-// ---------------------------------------------------------------------------
-// Darkelf Download Center — Core Types
-// ---------------------------------------------------------------------------
-
-/** Supported Darkelf products */
 export type ProductId =
   | "cocoa"
-  | "shadow"
-  | "osint_ai";
+  | "shadow";
 
-/** Release channels */
 export type Channel =
   | "stable"
   | "beta"
@@ -27,19 +16,16 @@ export type Channel =
   | "nightly"
   | "lts";
 
-/** Supported operating systems */
 export type Platform =
   | "windows"
   | "linux"
   | "macos";
 
-/** Supported CPU architectures */
 export type Architecture =
   | "x64"
   | "arm64"
   | "universal";
 
-/** Supported downloadable artifact types */
 export type FileType =
   | "exe"
   | "appimage"
@@ -49,43 +35,26 @@ export type FileType =
 
 export interface Artifact {
   platform: Platform;
-
   arch: Architecture;
-
   fileType: FileType;
-
   url: string;
-
   sizeBytes: number;
-
   sha256: string;
-
   notesUrl?: string;
 }
 
 export interface Release {
   product: ProductId;
-
   channel: Channel;
-
   version: string;
-
   dateISO: string;
-
   releasePageUrl: string;
-
   zipballUrl: string;
-
   highlights: string[];
-
   notesMarkdown?: string;
-
   artifacts: Artifact[];
 }
 
-// ---------------------------------------------------------------------------
-// Seeded release data — 1 example release per product
-// ---------------------------------------------------------------------------
 export const releases: Release[] = [
   {
     product: "cocoa",
@@ -97,13 +66,32 @@ export const releases: Release[] = [
     highlights: [
       "Native macOS browser built with Cocoa, WebKit and PyObjC",
       "Ephemeral browsing with no persistent cookies, cache or history",
-      "Secure Snapshot with optional PDF export",
-      "TLS security indicator and certificate awareness",
-      "Canvas fingerprint hardening with per-session randomization",
-      "First-party isolation and tracker protection",
       "MiniAI Sentinel security monitoring",
+      "Canvas fingerprint protection",
+      "First-party isolation",
+      "Improved tracker blocking",
+      "Performance and stability improvements",
     ],
-    notesMarkdown: "",
+    notesMarkdown: `
+## What's New
+
+- Improved MiniAI Sentinel.
+- Enhanced tracker blocking.
+- Improved session isolation.
+- Better toolbar and UI responsiveness.
+
+## Security
+
+- Improved fingerprint protections.
+- Hardened ephemeral browsing.
+- Updated privacy safeguards.
+
+## Fixes
+
+- Various bug fixes.
+- Improved stability.
+- Minor UI refinements.
+`,
     artifacts: [
       {
         platform: "macos",
@@ -116,7 +104,6 @@ export const releases: Release[] = [
       },
     ],
   },
-
   {
     product: "shadow",
     channel: "stable",
@@ -126,14 +113,33 @@ export const releases: Release[] = [
     zipballUrl: "",
     highlights: [
       "Privacy-first browser built with PySide6 and QtWebEngine",
-      "Ephemeral browsing with no persistent cookies, cache, or history",
-      "Integrated tracker, advertisement, and malicious content blocking",
-      "MiniAI Sentinel security monitoring and threat detection",
-      "WebRTC disabled by default to reduce IP address leakage",
-      "Request interception and hardened browsing protections",
-      "Cross-platform support for Windows, Linux, and macOS",
+      "Ephemeral browsing",
+      "MiniAI Sentinel improvements",
+      "Enhanced tracker protection",
+      "WebRTC disabled by default",
+      "Cross-platform support",
+      "Performance improvements",
     ],
-    notesMarkdown: "",
+    notesMarkdown: `
+## What's New
+
+- Improved request interception.
+- Enhanced tracker blocking.
+- Better MiniAI Sentinel detection.
+- Updated browser internals.
+
+## Security
+
+- Improved WebRTC protections.
+- Better privacy defaults.
+- Hardened browsing environment.
+
+## Fixes
+
+- Startup reliability improvements.
+- Rendering fixes.
+- General stability improvements.
+`,
     artifacts: [
       {
         platform: "windows",
