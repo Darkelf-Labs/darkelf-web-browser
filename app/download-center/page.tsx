@@ -5,14 +5,14 @@ import { DownloadCenterClient } from "@/components/DownloadCenterClient";
 import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
-  title: "Darkelf Download Center — Hardened Privacy Browsers for macOS, Linux & Windows",
+  title:
+    "Darkelf Download Center — Hardened Privacy Browsers for macOS, Linux & Windows",
   description:
-    "Download Darkelf Cocoa (macOS WebKit), Darkelf Shadow (PySide6 Linux/Windows). Non-persistent, anti-fingerprinting, SHA-256 verified. Free and open-source.",
+    "Download Darkelf Cocoa (macOS WebKit) and Darkelf Shadow (PySide6). Non-persistent, anti-fingerprinting, SHA-256 verified. Free and open-source.",
   keywords: [
     "download privacy browser",
     "Darkelf Cocoa download",
     "Darkelf Shadow download",
-    "Darkelf OSINT AI",
     "macOS privacy browser download",
     "Linux privacy browser download",
     "Windows privacy browser download",
@@ -24,11 +24,13 @@ export const metadata: Metadata = {
     "anti-fingerprinting browser download",
     "non-persistent browser download",
   ],
-  alternates: { canonical: "/download-center" },
+  alternates: {
+    canonical: "/download-center",
+  },
   openGraph: {
     title: "Darkelf Download Center — Hardened Privacy Browsers",
     description:
-      "Free, open-source, hardened privacy browsers. Darkelf Cocoa for macOS, Darkelf Shadow for Linux/Windows, and Darkelf OSINT AI. SHA-256 verified.",
+      "Free, open-source hardened privacy browsers. Darkelf Cocoa for macOS and Darkelf Shadow for Windows and Linux. SHA-256 verified.",
     url: "https://darkelfbrowser.com/download-center",
     type: "website",
   },
@@ -66,38 +68,47 @@ export default function DownloadCenterPage() {
             <span className="dot" aria-hidden="true" />
             <span>SECURE • VERIFIED • NON-PERSISTENT</span>
           </div>
+
           <h1 id="dc-hero-title" className="dc-hero__title">
             Darkelf Download Center
           </h1>
         </section>
 
+        <section className="section">
           <DownloadCenterClient
             cocoaRelease={cocoaRelease}
             shadowRelease={shadowRelease}
           />
         </section>
 
-        <section className="section dc-philosophy" aria-labelledby="dc-philosophy-title">
+        <section
+          className="section dc-philosophy"
+          aria-labelledby="dc-philosophy-title"
+        >
           <div className="section-title">
             <h2 id="dc-philosophy-title">Non-Persistent By Design</h2>
             <p>No data leaves the session. No exceptions.</p>
           </div>
+
           <div className="grid">
             {[
               {
                 icon: "bi-trash3",
                 title: "Session Wipe",
-                body: "Cookies, cache, and history are destroyed on exit. Nothing survives the shutdown.",
+                body:
+                  "Cookies, cache, and history are destroyed on exit. Nothing survives the shutdown.",
               },
               {
                 icon: "bi-shield-lock",
                 title: "Isolated Tabs",
-                body: "Each tab runs in a contained context. Cross-tab contamination is blocked by design.",
+                body:
+                  "Each tab runs in a contained context. Cross-tab contamination is blocked by design.",
               },
               {
                 icon: "bi-eye-slash",
                 title: "Zero Telemetry",
-                body: "No analytics, no crash reporting, no beacons. Your activity is yours alone.",
+                body:
+                  "No analytics, no crash reporting, no beacons. Your activity is yours alone.",
               },
             ].map((item) => (
               <div className="card" key={item.title}>
@@ -112,7 +123,9 @@ export default function DownloadCenterPage() {
 
       <footer>
         © 2026 Dr. Kevin Moore — MIT Licensed
-        <div className="line">Built for those who refuse to be watched.</div>
+        <div className="line">
+          Built for those who refuse to be watched.
+        </div>
       </footer>
     </>
   );
