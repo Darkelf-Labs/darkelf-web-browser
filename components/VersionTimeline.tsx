@@ -1,6 +1,6 @@
 import type { Release, ProductId, Channel, Platform } from "@/lib/releases";
 import { formatDate, platformLabel } from "@/lib/releases";
-import { PRODUCT_META, REPO_CONFIG } from "@/lib/config";
+import { PRODUCT_META } from "@/lib/config";
 import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
 
@@ -77,7 +77,13 @@ export function VersionTimeline({
               {release.artifacts.map((a) => (
                 <span key={a.platform} className="vtl-platform-chip">
                   <i
-                    className={`bi ${a.platform === "windows" ? "bi-windows" : a.platform === "macos" ? "bi-apple" : "bi-ubuntu"}`}
+                    className={`bi ${
+                      a.platform === "windows"
+                        ? "bi-windows"
+                        : a.platform === "macos"
+                        ? "bi-apple"
+                        : "bi-ubuntu"
+                    }`}
                     aria-hidden="true"
                   />
                   {platformLabel(a.platform)}
@@ -85,27 +91,55 @@ export function VersionTimeline({
               ))}
             </div>
 
-            <a
-              className="btn vtl-detail-btn"
-              href={release.releasePageUrl ?? REPO_CONFIG[release.product].releasesUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View ${meta.displayName} v${release.version} on GitHub`}
-            >
-              <i className="bi bi-github" aria-hidden="true" />
-              View Release
-            </a>
-            <a
-              className="btn vtl-repo-btn"
-              href={REPO_CONFIG[release.product].url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Go to ${meta.displayName} repository on GitHub`}
-            >
-              <i className="bi bi-box-arrow-up-right" aria-hidden="true" />
-              Repo
-            </a>
-          </li>
+            {/* Release Notes */}
+            {release.notesMarkdown && (
+              <section className="vtl-release-notes">
+                <div className="vtl-release-notes__header">
+                  <i className="bi bi-journal-text" aria-hidden="true" />
+                  <span>Release Notes</span>
+                </div>
+
+                <div className="vtl-release-notes__content">
+                  {release.notesMarkdown
+                    .trim()
+                    .split("\n")
+                    .filter((line) => line.trim())
+                    .map((line, i) => {
+                      if (line.startsWith("## ")) {
+                        return (
+                          <h4 key={i} className="vtl-note-heading">
+                            {line.replace(/^##\s*/, "")}
+                          </h4>
+                        );
+                      }
+
+                      if (line.startsWith("### ")) {
+                        return (
+                          <h5 key={i} className="vtl-note-subheading">
+                            {line.replace(/^###\s*/, "")}
+                          </h5>
+                        );
+                      }
+
+                      if (line.startsWith("- ")) {
+                        return (
+                          <div key={i} className="vtl-note-item">
+                            <i
+                              className="bi bi-arrow-right-circle-fill"
+                              aria-hidden="true"
+                            />
+                            <span>{line.replace(/^-\s*/, "")}</span>
+                          </div>
+                        );
+                      }
+
+                      return <p key={i}>{line}</p>;
+                    })}
+                </div>
+              </section>
+            )}
+
+           </li>
         );
       })}
     </ol>
