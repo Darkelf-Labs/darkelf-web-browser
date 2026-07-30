@@ -90,7 +90,7 @@ export const releases: Release[] = [
   {
     product: "cocoa",
     channel: "stable",
-    version: "7.0.4",
+    version: "7.0.5",
     dateISO: "2026-07-28",
     releasePageUrl: "",
     zipballUrl: "",
