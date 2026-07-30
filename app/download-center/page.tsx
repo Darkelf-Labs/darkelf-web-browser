@@ -7,7 +7,7 @@ import { asset } from "@/lib/asset";
 export const metadata: Metadata = {
   title: "Darkelf Download Center — Hardened Privacy Browsers for macOS, Linux & Windows",
   description:
-    "Download Darkelf Cocoa (macOS WebKit), Darkelf Shadow (PySide6 Linux/Windows), and Darkelf OSINT AI. Non-persistent, anti-fingerprinting, SHA-256 verified. Free and open-source.",
+    "Download Darkelf Cocoa (macOS WebKit), Darkelf Shadow (PySide6 Linux/Windows). Non-persistent, anti-fingerprinting, SHA-256 verified. Free and open-source.",
   keywords: [
     "download privacy browser",
     "Darkelf Cocoa download",
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
 export default function DownloadCenterPage() {
   const cocoaRelease = getLatestRelease("cocoa");
   const shadowRelease = getLatestRelease("shadow");
-  const osintAiRelease = getLatestRelease("osint_ai");
 
   return (
     <>
@@ -72,16 +71,9 @@ export default function DownloadCenterPage() {
           </h1>
         </section>
 
-        <section className="section" aria-labelledby="dc-downloads-title">
-          <div className="section-title">
-            <h2 id="dc-downloads-title">Choose Your Tool</h2>
-            <p>Browsers and AI tools. OS auto-detection highlights your build.</p>
-          </div>
-
           <DownloadCenterClient
             cocoaRelease={cocoaRelease}
             shadowRelease={shadowRelease}
-            osintAiRelease={osintAiRelease}
           />
         </section>
 
