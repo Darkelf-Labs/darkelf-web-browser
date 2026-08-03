@@ -1,3 +1,4 @@
+```yaml name=.github/workflows/darkelf-dependency-maintenance.yml
 name: Darkelf Dependency Maintenance
 
 on:
@@ -52,8 +53,16 @@ jobs:
 
       - name: Count high/critical vulns
         id: vuln
+        shell: bash
         run: |
-          node -e "const fs=require('fs'); const a=JSON.parse(fs.readFileSync('audit.json','utf8')); const m=(a.metadata&&a.metadata.vulnerabilities)||{}; const high=Number(m.high||0); const critical=Number(m.critical||0); console.log('high='+high); console.log('critical='+critical); fs.appendFileSync(process.env.GITHUB_OUTPUT,`high=${high}\ncritical=${critical}\n`);"
+          high=$(jq -r '.metadata.vulnerabilities.high // 0' audit.json)
+          critical=$(jq -r '.metadata.vulnerabilities.critical // 0' audit.json)
+          echo "high=$high"
+          echo "critical=$critical"
+          {
+            echo "high=$high"
+            echo "critical=$critical"
+          } >> "$GITHUB_OUTPUT"
 
       - name: Lint
         run: npm run lint
@@ -78,8 +87,14 @@ jobs:
             High vulnerabilities: ${{ steps.vuln.outputs.high }}
             Critical vulnerabilities: ${{ steps.vuln.outputs.critical }}
 
-            If high/critical remains, see attached audit output in workflow logs.
+            If high/critical remains, see workflow logs + audit.json artifact.
           labels: dependencies, automated
+
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report
+          path: audit.json
 
       - name: Open issue if high/critical vulnerabilities remain
         if: steps.vuln.outputs.high != '0' || steps.vuln.outputs.critical != '0'
@@ -88,3 +103,5 @@ jobs:
           title: "Security follow-up: unresolved npm audit findings"
           content-filepath: audit.json
           labels: security, dependencies
+```
+
