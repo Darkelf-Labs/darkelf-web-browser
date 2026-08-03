@@ -1,4 +1,3 @@
-```yaml name=.github/workflows/darkelf-dependency-maintenance.yml
 name: Darkelf Dependency Maintenance
 
 on:
