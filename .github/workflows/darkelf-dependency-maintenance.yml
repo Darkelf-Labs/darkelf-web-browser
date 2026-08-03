@@ -19,15 +19,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (clean)
+        run: npm ci
 
-      - name: Update packages
+      - name: Upgrade Next + React (security-sensitive path)
+        run: npm install next@latest react@latest react-dom@latest
+
+      - name: Update remaining packages
         run: npm update
 
-      - name: Audit
-        run: npm audit --audit-level=high || true
+      - name: Audit (prod deps, non-blocking)
+        run: npm audit --omit=dev --audit-level=high || true
 
       - name: Lint
         run: npm run lint
