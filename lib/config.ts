@@ -24,12 +24,6 @@ export const REPO_CONFIG = {
     url: "https://github.com/Darkelf2024/Darkelf-Shadow-CE",
     releasesUrl: "https://github.com/Darkelf2024/Darkelf-Shadow-CE/releases",
   },
-  osint_ai: {
-    org: "Darkelf2024",
-    repo: "Darkelf-OSINT-Ai",
-    url: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai",
-    releasesUrl: "https://github.com/Darkelf2024/Darkelf-OSINT-Ai/releases",
-  },
 } as const;
 
 export const PRODUCT_META = {
@@ -49,14 +43,5 @@ export const PRODUCT_META = {
       "Privacy-first browser built with PySide6 and QtWebEngine. Features ephemeral browsing, tracker and advertisement blocking, hardened network protections, MiniAI Sentinel, and cross-platform support for Windows, Linux, and macOS.",
     color: "var(--accent-2)",
     colorRgb: "0,234,255",
-  },
-
-  osint_ai: {
-    displayName: "Darkelf OSINT AI",
-    tagline: "AI-Assisted Open-Source Intelligence",
-    shortDescription:
-      "AI-powered OSINT toolkit combining traditional investigative workflows with local AI reasoning for privacy-conscious research and analysis.",
-    color: "var(--accent-4)",
-    colorRgb: "255,152,0",
   },
 } as const;
