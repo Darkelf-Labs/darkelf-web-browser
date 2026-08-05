@@ -64,7 +64,7 @@ function ReleasesFilterInner({ releases }: ReleasesFilterClientProps) {
               aria-pressed={product === "shadow"}
               type="button"
             >
-              Shadow Lite
+              Shadow
             </button>
           </div>
         </div>
