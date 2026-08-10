@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
 
       - name: Setup Node.js 24
         uses: actions/setup-node@v4
@@ -58,7 +58,7 @@ jobs:
       - name: Create dependency update PR
         uses: peter-evans/create-pull-request@v7
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT }}
           commit-message: "chore(deps): automatic weekly dependency update"
           committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           author: "Darkelf2024 <174353864+Darkelf2024@users.noreply.github.com>"
