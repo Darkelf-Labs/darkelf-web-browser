@@ -13,7 +13,6 @@ export type Channel =
   | "stable"
   | "beta"
   | "alpha"
-  | "nightly"
   | "lts";
 
 export type Platform =
@@ -107,7 +106,7 @@ export const releases: Release[] = [
   {
     product: "shadow",
     channel: "stable",
-    version: "7.0.5",
+    version: "7.0.7",
     dateISO: "2026-07-28",
     releasePageUrl: "",
     zipballUrl: "",
