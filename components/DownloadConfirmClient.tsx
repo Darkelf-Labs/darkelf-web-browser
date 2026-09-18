@@ -101,8 +101,8 @@ export function DownloadConfirmClient({
         <p className="dl-confirm__verify-note">
           <i className="bi bi-info-circle" aria-hidden="true" />
           Not sure how to verify?{" "}
-          <Link href="/security#verify" className="dc-link">
-            Read the verification guide
+          <Link href="/security" className="dc-link">
+            Review Security Features
           </Link>
         </p>
       </div>
