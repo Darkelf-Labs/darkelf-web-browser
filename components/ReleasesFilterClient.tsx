@@ -90,15 +90,6 @@ function ReleasesFilterInner({ releases }: ReleasesFilterClientProps) {
               <span className="status-badge__dot" style={{ background: "var(--accent)" }} aria-hidden="true" />
               Stable
             </button>
-            <button
-              className={`platform-pill ${channel === "nightly" ? "platform-pill--active" : ""}`}
-              onClick={() => setChannel("nightly")}
-              aria-pressed={channel === "nightly"}
-              type="button"
-            >
-              <span className="status-badge__dot" style={{ background: "#ffd36b" }} aria-hidden="true" />
-              Nightly
-            </button>
           </div>
         </div>
 
