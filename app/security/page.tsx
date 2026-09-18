@@ -5,36 +5,135 @@ import { VerifySteps } from "@/components/VerifySteps";
 import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
-  title: "Security & Verification — SHA-256 Checksums & Non-Persistent Design",
+  title: "Security Features — Darkelf Browser Privacy & Protection",
   description:
-    "How to verify Darkelf browser downloads using SHA-256 checksums on Windows, Linux, and macOS. Learn about non-persistent browser design, supply chain attack prevention, and Darkelf's ephemeral privacy philosophy.",
+    "Explore Darkelf Browser security features including ephemeral browsing, tracker and ad blocking, canvas fingerprint protection, first-party isolation, WebRTC protection, MiniAI Sentinel, and narrowly scoped compatibility controls.",
   keywords: [
-    'SHA-256 browser verification', 'verify browser download', 'browser checksum',
-    'supply chain attack prevention', 'non-persistent browser design', 'ephemeral browser privacy',
-    'browser security verification', 'secure download verification', 'browser SHA256',
-    'PowerShell Get-FileHash', 'sha256sum Linux', 'browser no persistence',
-    'privacy browser philosophy', 'no cookies browser', 'no history browser',
-    'WebRTC disabled browser', 'Darkelf security', 'browser fingerprint protection',
+    "Darkelf security",
+    "privacy browser security",
+    "ephemeral browser",
+    "tracker blocking",
+    "ad blocking",
+    "canvas fingerprint protection",
+    "first-party isolation",
+    "WebRTC protection",
+    "MiniAI Sentinel",
+    "anti-fingerprinting browser",
+    "non-persistent browser",
+    "browser privacy protection",
   ],
-  alternates: { canonical: '/security' },
+  alternates: { canonical: "/security" },
   openGraph: {
-    title: "Darkelf Security & Verification — SHA-256, Non-Persistent Design",
+    title: "Darkelf Security Features — Privacy Without Blind Trust",
     description:
-      "Verify every Darkelf download with SHA-256. Learn how non-persistent browser design protects your privacy. Never run a binary you haven't checked.",
+      "A technical overview of Darkelf's layered privacy, anti-tracking, fingerprint protection, ephemeral browsing, and compatibility architecture.",
     url: "https://darkelfbrowser.com/security",
     type: "website",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: "Darkelf Security & Verification",
-    description: "SHA-256 verification guide and non-persistent browser design philosophy.",
+    card: "summary_large_image",
+    title: "Darkelf Security Features",
+    description:
+      "Explore Darkelf's layered browser privacy, anti-tracking, anti-fingerprinting, and ephemeral security architecture.",
   },
 };
 
-const EXAMPLE_SHA =
-  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
-
 export default function SecurityPage() {
+  const highlights = [
+    {
+      icon: "bi-incognito",
+      title: "Ephemeral by Design",
+      body: "Darkelf is built around non-persistent browsing. Session data is designed to disappear with the session rather than becoming a long-lived browser profile.",
+    },
+    {
+      icon: "bi-shield-lock",
+      title: "Darkelf Standard Protection",
+      body: "A locally compiled protection ruleset combines configured upstream filter subscriptions, removes duplicate rules, excludes unsupported directives, and is parsed as a unified runtime ruleset.",
+    },
+    {
+      icon: "bi-eye-slash",
+      title: "Tracker & Ad Blocking",
+      body: "Network filtering blocks known advertising and tracking requests while refined first-party, third-party, and resource-type handling reduces unnecessary website breakage.",
+    },
+    {
+      icon: "bi-fingerprint",
+      title: "Canvas Fingerprint Protection",
+      body: "Canvas readback is blocked by default. Protected and Trusted modes provide narrowly scoped compatibility when a website genuinely requires additional canvas functionality.",
+    },
+    {
+      icon: "bi-box-arrow-in-right",
+      title: "First-Party Isolation",
+      body: "Darkelf separates first-party browsing context from third-party network activity to reduce cross-site tracking and unwanted correlation between browsing sessions.",
+    },
+    {
+      icon: "bi-broadcast-pin",
+      title: "WebRTC Protection",
+      body: "Shadow's privacy defaults restrict WebRTC exposure to reduce the risk of network information leaking outside the intended browsing path.",
+    },
+    {
+      icon: "bi-cpu",
+      title: "MiniAI Sentinel",
+      body: "MiniAI Sentinel monitors active navigations and network calls for suspicious behavior while avoiding unnecessary processing of every static image, font, and stylesheet.",
+    },
+    {
+      icon: "bi-link-45deg",
+      title: "Tracking-Parameter Removal",
+      body: "Common tracking parameters can be stripped from top-level navigation URLs, reducing passive attribution without rewriting every subresource request.",
+    },
+    {
+      icon: "bi-cursor",
+      title: "Hyperlink Ping Protection",
+      body: "Hyperlink ping tracking remains disabled, preventing pages from silently sending supported click-tracking beacon requests through that mechanism.",
+    },
+    {
+      icon: "bi-person-check",
+      title: "Secure Challenge Compatibility",
+      body: "Human-verification flows such as reCAPTCHA, hCaptcha, Cloudflare Turnstile, and Arkose/FunCaptcha receive narrowly scoped compatibility handling instead of globally disabling privacy protections.",
+    },
+    {
+      icon: "bi-hourglass-split",
+      title: "Session-Only Trust",
+      body: "When a supported verification challenge requires native canvas behavior, Darkelf can grant compatibility for the current session only. The temporary grant is cleared when Darkelf closes.",
+    },
+    {
+      icon: "bi-diagram-3",
+      title: "Resource-Aware Filtering",
+      body: "ABP-style resource types are evaluated as constraints, helping prevent a rule intended for ping, image, script, or XHR traffic from being incorrectly applied to unrelated request types.",
+    },
+  ];
+
+  const compatibility = [
+    "Authentication-sensitive resources receive narrowly scoped handling rather than broad filter bypasses.",
+    "Improved compatibility with Google and Microsoft authentication flows.",
+    "Challenge handling supports reCAPTCHA, hCaptcha, Cloudflare Turnstile, and Arkose/FunCaptcha.",
+    "Refined cross-origin resource handling reduces broken scripts, images, logos, XHR/fetch requests, and embedded content.",
+    "BrowserLeaks diagnostic exceptions remain tightly scoped instead of weakening normal browsing protection.",
+    "Network-rule evaluation stops when a definitive blocking match is reached, reducing unnecessary rule scanning.",
+  ];
+
+  const privacyModel = [
+    {
+      title: "Cookies",
+      body: "Designed for ephemeral session use rather than persistent cross-session identity.",
+    },
+    {
+      title: "Cache & Session State",
+      body: "Darkelf prioritizes temporary browsing state and cleanup instead of building a long-lived browsing profile.",
+    },
+    {
+      title: "History",
+      body: "The browser is designed around non-persistent browsing rather than a permanent local activity timeline.",
+    },
+    {
+      title: "Fingerprint Surface",
+      body: "Canvas protections and controlled compatibility modes reduce unnecessary fingerprint exposure while preserving functionality where required.",
+    },
+    {
+      title: "Network Privacy",
+      body: "Tracker filtering, first/third-party awareness, tracking-parameter removal, ping protection, and WebRTC controls provide multiple independent layers.",
+    },
+  ];
+
   return (
     <>
       <div className="security-bg-video-wrap" aria-hidden="true">
@@ -58,51 +157,27 @@ export default function SecurityPage() {
 
       <main>
         <article className="section security-page" aria-labelledby="sec-title">
-          {/* Hero */}
           <div className="sec-hero">
             <div className="eyebrow">
               <span className="dot" aria-hidden="true" />
-              <span>TRUST NO BINARY BLINDLY</span>
+              <span>LAYERED PRIVACY • EPHEMERAL BY DESIGN</span>
             </div>
-            <h1 id="sec-title">Security &amp; Verification</h1>
+            <h1 id="sec-title">Security Features</h1>
+            <p className="sub">
+              Darkelf combines non-persistent browsing, network filtering,
+              anti-fingerprinting controls, session isolation, and targeted
+              compatibility logic. The goal is strong privacy protection
+              without unnecessarily breaking the modern web.
+            </p>
           </div>
 
-          {/* Verify section */}
-          <section id="verify" aria-labelledby="verify-section-title" className="sec-section">
-            <h2 id="verify-section-title">
-              <i className="bi bi-shield-check" aria-hidden="true" /> How to
-              Verify SHA-256
-            </h2>
-            <VerifySteps
-              sha256={EXAMPLE_SHA}
-              filename="DarkelfCocoa-4.3-macos-x64.dmg"
-            />
-          </section>
-
-          {/* Why it matters */}
-          <section className="sec-section" aria-labelledby="why-title">
-            <h2 id="why-title">
-              <i className="bi bi-question-circle" aria-hidden="true" /> Why
-              This Matters
+          <section className="sec-section" aria-labelledby="highlights-title">
+            <h2 id="highlights-title">
+              <i className="bi bi-shield-check" aria-hidden="true" /> Security
+              Highlights
             </h2>
             <div className="sec-cards">
-              {[
-                {
-                  icon: "bi-shield-exclamation",
-                  title: "Supply Chain Attacks",
-                  body: "A tampered binary can look identical to the real one. SHA-256 makes it mathematically impossible to modify a file without changing its hash.",
-                },
-                {
-                  icon: "bi-wifi-off",
-                  title: "Corrupted Downloads",
-                  body: "Network errors and storage failures can corrupt files silently. The checksum catches corruption before it causes crashes or data exposure.",
-                },
-                {
-                  icon: "bi-person-x",
-                  title: "Impersonation",
-                  body: "Fake download sites mirroring Darkelf binaries cannot produce matching SHA-256 values without access to the original build artifacts.",
-                },
-              ].map((item) => (
+              {highlights.map((item) => (
                 <div className="card" key={item.title}>
                   <i className={`bi ${item.icon}`} aria-hidden="true" />
                   <h3>{item.title}</h3>
@@ -112,82 +187,122 @@ export default function SecurityPage() {
             </div>
           </section>
 
-          {/* Non-persistent design */}
-          <section className="sec-section" aria-labelledby="nonpersist-title">
-            <h2 id="nonpersist-title">
-              <i className="bi bi-eraser" aria-hidden="true" /> Non-Persistent
-              Design Philosophy
+          <section className="sec-section" aria-labelledby="defense-title">
+            <h2 id="defense-title">
+              <i className="bi bi-layers" aria-hidden="true" /> Defense in Depth
             </h2>
             <div className="sec-philosophy">
               <p>
-                Darkelf browsers are engineered around a core axiom:{" "}
-                <strong>
-                  no session data should outlive the session that created it.
-                </strong>
+                Darkelf does not rely on a single privacy mechanism. Its security
+                model combines several independent layers so that tracking and
+                fingerprinting are addressed at different points in the browser.
               </p>
               <ul className="sec-list">
                 <li>
                   <i className="bi bi-check2-circle" aria-hidden="true" />
-                  <span>
-                    <strong>Cookies</strong> — stored in memory only; never
-                    written to disk.
-                  </span>
+                  <span><strong>Network layer</strong> — compiled tracker/ad rules, request-type constraints, and first/third-party awareness.</span>
                 </li>
                 <li>
                   <i className="bi bi-check2-circle" aria-hidden="true" />
-                  <span>
-                    <strong>Cache</strong> — process-scoped; destroyed on
-                    shutdown or tab close.
-                  </span>
+                  <span><strong>Fingerprint layer</strong> — default canvas readback blocking with Protected and session-only Trusted compatibility modes.</span>
                 </li>
                 <li>
                   <i className="bi bi-check2-circle" aria-hidden="true" />
-                  <span>
-                    <strong>History</strong> — not recorded. No timeline. No
-                    footprint.
-                  </span>
+                  <span><strong>Navigation layer</strong> — tracking-parameter removal and hyperlink ping protection.</span>
                 </li>
                 <li>
                   <i className="bi bi-check2-circle" aria-hidden="true" />
-                  <span>
-                    <strong>Downloads (Shadow Lite)</strong> — disabled by
-                    design. Any disk write is forced into a strict folder and
-                    wiped on shutdown.
-                  </span>
+                  <span><strong>Session layer</strong> — ephemeral browsing and temporary compatibility grants rather than permanent trust.</span>
                 </li>
                 <li>
                   <i className="bi bi-check2-circle" aria-hidden="true" />
-                  <span>
-                    <strong>No WebRTC (Shadow Lite)</strong> — real IP cannot
-                    leak through WebRTC peer connections.
-                  </span>
+                  <span><strong>Monitoring layer</strong> — MiniAI Sentinel focuses security monitoring on active navigations and network calls.</span>
                 </li>
               </ul>
-              <p className="sec-note">
-                <i className="bi bi-info-circle" aria-hidden="true" />
-                This means Darkelf is a tool for a specific workflow: secure,
-                ephemeral sessions. It is not a general-purpose browser. If you
-                need persistent bookmarks or download management, use a
-                different tool.
-              </p>
             </div>
           </section>
 
-          {/* Signature placeholder */}
-          <section className="sec-section" aria-labelledby="sig-title">
-            <h2 id="sig-title">
-              <i className="bi bi-pen" aria-hidden="true" /> Code Signatures
-              (Planned)
+          <section className="sec-section" aria-labelledby="compat-title">
+            <h2 id="compat-title">
+              <i className="bi bi-globe2" aria-hidden="true" /> Security Without
+              Sacrificing Compatibility
             </h2>
-            <p className="sub">
-              GPG / Minisign detached signatures are planned for a future
-              release. When available, the artifact table on each release detail
-              page will include a signature download link. Verify instructions
-              will be published here.
+            <div className="sec-philosophy">
+              <p>
+                Privacy controls are most useful when websites remain usable.
+                Darkelf therefore favors narrowly scoped exceptions and
+                resource-aware decisions instead of disabling protection for an
+                entire site.
+              </p>
+              <ul className="sec-list">
+                {compatibility.map((item) => (
+                  <li key={item}>
+                    <i className="bi bi-check2-circle" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section className="sec-section" aria-labelledby="privacy-title">
+            <h2 id="privacy-title">
+              <i className="bi bi-incognito" aria-hidden="true" /> Ephemeral
+              Privacy Model
+            </h2>
+            <div className="sec-cards">
+              {privacyModel.map((item) => (
+                <div className="card" key={item.title}>
+                  <i className="bi bi-shield-lock" aria-hidden="true" />
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+              ))}
+            </div>
+            <p className="sec-note">
+              <i className="bi bi-info-circle" aria-hidden="true" />
+              Darkelf is designed for privacy-focused, ephemeral browsing. Some
+              websites require authentication or anti-bot features that depend
+              on browser capabilities normally restricted for privacy. Darkelf
+              handles supported cases with targeted, temporary compatibility
+              rather than globally disabling its protections.
             </p>
           </section>
 
-          {/* Nav footer */}
+          <section className="sec-section" aria-labelledby="principles-title">
+            <h2 id="principles-title">
+              <i className="bi bi-lock" aria-hidden="true" /> Core Security
+              Principles
+            </h2>
+            <div className="sec-cards">
+              <div className="card">
+                <i className="bi bi-slash-circle" aria-hidden="true" />
+                <h3>Block by Default</h3>
+                <p>
+                  Privacy-sensitive capabilities such as canvas readback remain
+                  restricted unless a defined compatibility path requires them.
+                </p>
+              </div>
+              <div className="card">
+                <i className="bi bi-bullseye" aria-hidden="true" />
+                <h3>Scope Exceptions Narrowly</h3>
+                <p>
+                  Compatibility exceptions target the resource, path, provider,
+                  or current session instead of creating unnecessary global
+                  bypasses.
+                </p>
+              </div>
+              <div className="card">
+                <i className="bi bi-clock-history" aria-hidden="true" />
+                <h3>Trust Should Expire</h3>
+                <p>
+                  Challenge-related trust is designed to be temporary. Session
+                  compatibility state is discarded when Darkelf closes.
+                </p>
+              </div>
+            </div>
+          </section>
+
           <div className="rd-nav-links">
             <Link href="/download-center" className="btn">
               <i className="bi bi-download" aria-hidden="true" />
