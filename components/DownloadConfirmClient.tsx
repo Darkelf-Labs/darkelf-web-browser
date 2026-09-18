@@ -41,7 +41,7 @@ export function DownloadConfirmClient({
               <span className="mono">v{release.version}</span>
               <span className={`status-badge status-badge--${release.channel}`} style={{ marginLeft: 8 }}>
                 <span className="status-badge__dot" aria-hidden="true" />
-                {release.channel === "stable" ? "Stable" : "Nightly"}
+                {release.channel.charAt(0).toUpperCase() + release.channel.slice(1)}
               </span>
             </dd>
           </div>
@@ -68,17 +68,6 @@ export function DownloadConfirmClient({
           </div>
 
         </dl>
-
-        {/* Warning */}
-        {release.channel === "nightly" && (
-          <div className="dl-confirm__warn" role="alert">
-            <i className="bi bi-exclamation-triangle" aria-hidden="true" />
-            <span>
-              <strong>Nightly build</strong> — not production-ready. Use only for
-              testing.
-            </span>
-          </div>
-        )}
 
         {/* Actions */}
         <div className="dl-confirm__actions">
