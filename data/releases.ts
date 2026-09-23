@@ -2,7 +2,8 @@
 // Darkelf Release Notes Data Store
 // ---------------------------------------------------------------------------
 // This file powers the Release History pages.
-// Downloads are managed separately by the Download Center.
+// Downloads and package installation are managed separately by the
+// Download Center.
 // ---------------------------------------------------------------------------
 
 export type ProductId =
@@ -63,15 +64,27 @@ export const releases: Release[] = [
     releasePageUrl: "",
     zipballUrl: "",
     highlights: [
-      "Native macOS browser built with Cocoa, WebKit and PyObjC",
+      "Lightweight native macOS browser built with Cocoa, WebKit and PyObjC",
+      "Distributed through PyPI for pip installation",
       "Ephemeral browsing with no persistent cookies, cache or history",
       "MiniAI Sentinel security monitoring",
       "Canvas fingerprint protection",
       "First-party isolation",
-      "Improved tracker blocking",
-      "Performance and stability improvements",
+      "Tracker blocking and privacy protections",
     ],
     notesMarkdown: `
+## Darkelf Cocoa
+
+Darkelf Cocoa is the lightweight native macOS browser in the Darkelf
+Browser ecosystem. It is built with Cocoa, WebKit and PyObjC and is
+distributed through PyPI.
+
+### Installation
+
+\`\`\`bash
+pip install darkelf-cocoa
+\`\`\`
+
 ## What's New
 
 - Improved MiniAI Sentinel.
@@ -91,18 +104,9 @@ export const releases: Release[] = [
 - Improved stability.
 - Minor UI refinements.
 `,
-    artifacts: [
-      {
-        platform: "macos",
-        arch: "universal",
-        fileType: "dmg",
-        url: "",
-        sizeBytes: 0,
-        sha256: "",
-        notesUrl: "",
-      },
-    ],
+    artifacts: [],
   },
+
   {
     product: "shadow",
     channel: "stable",
@@ -111,15 +115,20 @@ export const releases: Release[] = [
     releasePageUrl: "",
     zipballUrl: "",
     highlights: [
-      "Privacy-first browser built with PySide6 and QtWebEngine",
-      "Ephemeral browsing",
-      "MiniAI Sentinel improvements",
+      "Flagship Darkelf privacy browser built with PySide6 and QtWebEngine",
+      "Cross-platform support for macOS, Windows and Linux",
+      "Ephemeral privacy-focused browsing",
+      "MiniAI Sentinel security monitoring",
       "Enhanced tracker protection",
-      "WebRTC disabled by default",
-      "Cross-platform support",
-      "Performance improvements",
+      "WebRTC privacy protections",
+      "Performance and compatibility improvements",
     ],
     notesMarkdown: `
+## Darkelf Shadow
+
+Darkelf Shadow is the flagship browser in the Darkelf Browser ecosystem,
+built with PySide6 and QtWebEngine for macOS, Windows and Linux.
+
 ## What's New
 
 - Improved request interception.
