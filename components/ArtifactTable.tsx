@@ -30,9 +30,10 @@ function ArtifactRow({
     isAllowedDownloadUrl(artifact.url) &&
     !isPlaceholderUrl;
 
-  const hasSize =
-    typeof artifact.sizeBytes === "number" &&
-    artifact.sizeBytes > 0;
+  // Normalize optional/empty size to a definite number.
+  // This prevents number | undefined from reaching formatBytes().
+  const sizeBytes = artifact.sizeBytes ?? 0;
+  const hasSize = sizeBytes > 0;
 
   return (
     <tr className="artifact-row">
@@ -67,16 +68,20 @@ function ArtifactRow({
         </span>
       </td>
 
-      {/* Size */}
+      {/* Distribution / Size */}
       <td className="artifact-cell artifact-cell--size">
         {isPyPI ? (
-          <span className="mono">PyPI</span>
+          <span className="mono">
+            PyPI
+          </span>
         ) : hasSize ? (
           <span className="mono">
-            {formatBytes(artifact.sizeBytes)}
+            {formatBytes(sizeBytes)}
           </span>
         ) : (
-          <span className="mono">—</span>
+          <span className="mono">
+            —
+          </span>
         )}
       </td>
 
@@ -180,10 +185,18 @@ export function ArtifactTable({
       <table className="artifact-table">
         <thead>
           <tr>
-            <th scope="col">Platform</th>
-            <th scope="col">Arch</th>
-            <th scope="col">Distribution</th>
-            <th scope="col">Install / Download</th>
+            <th scope="col">
+              Platform
+            </th>
+            <th scope="col">
+              Arch
+            </th>
+            <th scope="col">
+              Distribution
+            </th>
+            <th scope="col">
+              Install / Download
+            </th>
           </tr>
         </thead>
 
