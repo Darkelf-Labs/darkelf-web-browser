@@ -1,18 +1,38 @@
-import type { Release, Artifact, Platform } from "@/lib/releases";
+import type {
+  Release,
+  Artifact,
+  Platform,
+} from "@/lib/releases";
+
 import {
   formatBytes,
   platformLabel,
   fileTypeLabel,
   isAllowedDownloadUrl,
 } from "@/lib/releases";
+
 interface ArtifactRowProps {
   artifact: Artifact;
   release: Release;
 }
 
-function ArtifactRow({ artifact, release }: ArtifactRowProps) {
-  const isPlaceholderUrl = artifact.url.includes("TODO_");
-  const isValidUrl = isAllowedDownloadUrl(artifact.url) && !isPlaceholderUrl;
+function ArtifactRow({
+  artifact,
+  release,
+}: ArtifactRowProps) {
+  const isPyPI = artifact.fileType === "pypi";
+
+  const isPlaceholderUrl =
+    artifact.url?.includes("TODO_") ?? false;
+
+  const isValidUrl =
+    Boolean(artifact.url) &&
+    isAllowedDownloadUrl(artifact.url) &&
+    !isPlaceholderUrl;
+
+  const hasSize =
+    typeof artifact.sizeBytes === "number" &&
+    artifact.sizeBytes > 0;
 
   return (
     <tr className="artifact-row">
@@ -28,23 +48,37 @@ function ArtifactRow({ artifact, release }: ArtifactRowProps) {
           }`}
           aria-hidden="true"
         />
-        <span>{platformLabel(artifact.platform)}</span>
+
+        <span>
+          {platformLabel(artifact.platform)}
+        </span>
+
         <span className="artifact-filetype">
           {fileTypeLabel(artifact.fileType)}
         </span>
       </td>
 
-      {/* Arch */}
+      {/* Architecture */}
       <td className="artifact-cell artifact-cell--arch">
-        <span className="mono">{artifact.arch}</span>
+        <span className="mono">
+          {artifact.arch === "any"
+            ? "Any"
+            : artifact.arch}
+        </span>
       </td>
 
       {/* Size */}
       <td className="artifact-cell artifact-cell--size">
-        <span className="mono">{formatBytes(artifact.sizeBytes)}</span>
+        {isPyPI ? (
+          <span className="mono">PyPI</span>
+        ) : hasSize ? (
+          <span className="mono">
+            {formatBytes(artifact.sizeBytes)}
+          </span>
+        ) : (
+          <span className="mono">—</span>
+        )}
       </td>
-
-      {/* SHA-256 column removed */}
 
       {/* Actions */}
       <td className="artifact-cell artifact-cell--actions">
@@ -54,20 +88,37 @@ function ArtifactRow({ artifact, release }: ArtifactRowProps) {
             href={artifact.notesUrl}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Release notes for ${platformLabel(artifact.platform)} build`}
+            aria-label={`Release notes for ${platformLabel(
+              artifact.platform
+            )} build`}
           >
             Notes
           </a>
         )}
-        {isValidUrl ? (
+
+        {isPyPI && artifact.installCommand ? (
+          <code
+            className="mono"
+            aria-label={`Install ${release.product} using PyPI`}
+          >
+            {artifact.installCommand}
+          </code>
+        ) : isValidUrl ? (
           <a
             className="btn primary artifact-dl-btn"
             href={artifact.url}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Download ${platformLabel(artifact.platform)} build (${fileTypeLabel(artifact.fileType)})`}
+            aria-label={`Download ${platformLabel(
+              artifact.platform
+            )} build (${fileTypeLabel(
+              artifact.fileType
+            )})`}
           >
-            <i className="bi bi-download" aria-hidden="true" />
+            <i
+              className="bi bi-download"
+              aria-hidden="true"
+            />
             <span>Download</span>
           </a>
         ) : release.zipballUrl ? (
@@ -78,12 +129,18 @@ function ArtifactRow({ artifact, release }: ArtifactRowProps) {
             rel="noopener noreferrer"
             aria-label="Download source archive"
           >
-            <i className="bi bi-download" aria-hidden="true" />
-            <span>Download</span>
+            <i
+              className="bi bi-download"
+              aria-hidden="true"
+            />
+            <span>Source</span>
           </a>
         ) : (
-          <span className="artifact-unavailable" aria-label="Download not yet available">
-            Coming Soon
+          <span
+            className="artifact-unavailable"
+            aria-label="Download not available"
+          >
+            —
           </span>
         )}
       </td>
@@ -101,32 +158,39 @@ export function ArtifactTable({
   platforms,
 }: ArtifactTableProps) {
   const artifacts = platforms
-    ? release.artifacts.filter((a) => platforms.includes(a.platform))
+    ? release.artifacts.filter((artifact) =>
+        platforms.includes(artifact.platform)
+      )
     : release.artifacts;
 
   if (artifacts.length === 0) {
     return (
       <div className="artifact-empty">
-        No artifacts available for this release yet.
+        No distribution information available for this release.
       </div>
     );
   }
 
   return (
-    <div className="artifact-table-wrap" role="region" aria-label="Download artifacts">
+    <div
+      className="artifact-table-wrap"
+      role="region"
+      aria-label="Release distributions"
+    >
       <table className="artifact-table">
         <thead>
           <tr>
             <th scope="col">Platform</th>
             <th scope="col">Arch</th>
-            <th scope="col">Size</th>
-            <th scope="col">Actions</th>
+            <th scope="col">Distribution</th>
+            <th scope="col">Install / Download</th>
           </tr>
         </thead>
+
         <tbody>
-          {artifacts.map((artifact) => (
+          {artifacts.map((artifact, index) => (
             <ArtifactRow
-              key={`${artifact.platform}-${artifact.arch}`}
+              key={`${artifact.platform}-${artifact.arch}-${artifact.fileType}-${index}`}
               artifact={artifact}
               release={release}
             />
