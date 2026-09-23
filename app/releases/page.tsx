@@ -6,20 +6,30 @@ import { ReleasesFilterClient } from "@/components/ReleasesFilterClient";
 import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
-  title: "All Releases — Darkelf Cocoa, Shadow & OSINT AI",
+  title: "Darkelf Browser Releases — Shadow & Cocoa",
   description:
-    "Browse all Darkelf browser releases: Darkelf Cocoa (macOS), Darkelf Shadow (Linux/Windows), and Darkelf OSINT AI. Filter by product, channel, and platform. SHA-256 verified.",
+    "Browse Darkelf Shadow and Darkelf Cocoa releases. Darkelf Shadow is the flagship cross-platform privacy browser for macOS, Windows, and Linux. Darkelf Cocoa is the lightweight native macOS browser available through PyPI.",
   keywords: [
-    'Darkelf releases', 'Darkelf Cocoa releases', 'Darkelf Shadow releases',
-    'Darkelf OSINT AI releases',
-    'privacy browser releases', 'browser changelog', 'browser release notes',
-    'macOS browser release', 'Linux browser release', 'Windows browser release',
-    'nightly browser build', 'stable browser release', 'open source browser releases',
+    "Darkelf releases",
+    "Darkelf Shadow releases",
+    "Darkelf Cocoa releases",
+    "Darkelf privacy browser",
+    "privacy browser releases",
+    "browser changelog",
+    "browser release notes",
+    "macOS privacy browser",
+    "Linux privacy browser",
+    "Windows privacy browser",
+    "PyPI browser",
+    "pip install browser",
+    "stable browser release",
+    "open source browser releases",
   ],
-  alternates: { canonical: '/releases' },
+  alternates: { canonical: "/releases" },
   openGraph: {
-    title: "All Darkelf Browser Releases",
-    description: "Browse all releases for Darkelf Cocoa, Shadow, and OSINT AI. Filter by platform, channel, and product. SHA-256 verified downloads.",
+    title: "Darkelf Browser Releases — Shadow & Cocoa",
+    description:
+      "Browse releases for Darkelf Shadow, the flagship cross-platform privacy browser, and Darkelf Cocoa, the lightweight native macOS browser available through PyPI.",
     url: "https://darkelfbrowser.com/releases",
     type: "website",
   },
@@ -53,11 +63,21 @@ export default function ReleasesPage() {
         <section className="section" aria-labelledby="releases-title">
           <div className="section-title">
             <div>
-              <h1 id="releases-title">All Releases</h1>
+              <h1 id="releases-title">Darkelf Browser Releases</h1>
+
               <p>
-                Latest first. Filter by product, channel, or platform.
+                Darkelf Shadow is the flagship Darkelf privacy browser for
+                macOS, Windows, and Linux. Darkelf Cocoa is the lightweight
+                native macOS browser built with Cocoa, WebKit, and PyObjC and
+                distributed through PyPI.
+              </p>
+
+              <p>
+                Browse the release history below and filter by product,
+                channel, or platform.
               </p>
             </div>
+
             <div className="section-title-actions">
               <Link href="/download-center" className="btn">
                 <i className="bi bi-download" aria-hidden="true" />
@@ -72,9 +92,7 @@ export default function ReleasesPage() {
               <p>No releases yet. Check back soon.</p>
             </div>
           ) : (
-            <ReleasesFilterClient
-              releases={releases}
-            />
+            <ReleasesFilterClient releases={releases} />
           )}
         </section>
       </main>
