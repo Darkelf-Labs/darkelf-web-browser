@@ -1,8 +1,16 @@
 // ---------------------------------------------------------------------------
 // Darkelf Release Notes Data Store
 // ---------------------------------------------------------------------------
-// This file powers the Release History pages.
-// Downloads and package installation are managed separately by the
+// This file powers the Darkelf Release History.
+//
+// A release may be distributed through one or more methods:
+//   - PyPI / pip
+//   - macOS DMG
+//   - Windows executable
+//   - Linux AppImage
+//   - ZIP / tar.gz
+//
+// Installation and download actions are presented separately by the
 // Download Center.
 // ---------------------------------------------------------------------------
 
@@ -24,9 +32,11 @@ export type Platform =
 export type Architecture =
   | "x64"
   | "arm64"
-  | "universal";
+  | "universal"
+  | "any";
 
 export type FileType =
+  | "pypi"
   | "exe"
   | "appimage"
   | "dmg"
@@ -37,10 +47,18 @@ export interface Artifact {
   platform: Platform;
   arch: Architecture;
   fileType: FileType;
+
+  // Direct download or package page when applicable.
   url: string;
-  sizeBytes: number;
-  sha256: string;
+
+  // Optional for package-manager distributions such as PyPI.
+  sizeBytes?: number;
+  sha256?: string;
+
   notesUrl?: string;
+
+  // Used for package-manager distributions such as PyPI.
+  installCommand?: string;
 }
 
 export interface Release {
@@ -48,36 +66,47 @@ export interface Release {
   channel: Channel;
   version: string;
   dateISO: string;
+
   releasePageUrl: string;
   zipballUrl: string;
+
   highlights: string[];
   notesMarkdown?: string;
+
   artifacts: Artifact[];
 }
 
 export const releases: Release[] = [
+  // -------------------------------------------------------------------------
+  // Darkelf Cocoa 7.0.8
+  // -------------------------------------------------------------------------
+
   {
     product: "cocoa",
     channel: "stable",
-    version: "7.0.7",
+    version: "7.0.8",
     dateISO: "2026-07-28",
+
     releasePageUrl: "",
     zipballUrl: "",
+
     highlights: [
       "Lightweight native macOS browser built with Cocoa, WebKit and PyObjC",
-      "Distributed through PyPI for pip installation",
+      "Available through PyPI for pip installation",
       "Ephemeral browsing with no persistent cookies, cache or history",
       "MiniAI Sentinel security monitoring",
       "Canvas fingerprint protection",
       "First-party isolation",
       "Tracker blocking and privacy protections",
     ],
+
     notesMarkdown: `
-## Darkelf Cocoa
+## Darkelf Cocoa 7.0.8
 
 Darkelf Cocoa is the lightweight native macOS browser in the Darkelf
-Browser ecosystem. It is built with Cocoa, WebKit and PyObjC and is
-distributed through PyPI.
+Browser ecosystem.
+
+It is built with Cocoa, WebKit and PyObjC and distributed through PyPI.
 
 ### Installation
 
@@ -104,30 +133,60 @@ pip install darkelf-cocoa
 - Improved stability.
 - Minor UI refinements.
 `,
-    artifacts: [],
+
+    artifacts: [
+      {
+        platform: "macos",
+        arch: "any",
+        fileType: "pypi",
+        url: "",
+        installCommand: "pip install darkelf-cocoa",
+      },
+    ],
   },
+
+  // -------------------------------------------------------------------------
+  // Darkelf Shadow 7.0.8
+  // -------------------------------------------------------------------------
 
   {
     product: "shadow",
     channel: "stable",
-    version: "7.0.7",
+    version: "7.0.8",
     dateISO: "2026-07-28",
+
     releasePageUrl: "",
     zipballUrl: "",
+
     highlights: [
       "Flagship Darkelf privacy browser built with PySide6 and QtWebEngine",
       "Cross-platform support for macOS, Windows and Linux",
+      "Available through PyPI for cross-platform installation",
+      "macOS application also available as a signed DMG release",
       "Ephemeral privacy-focused browsing",
       "MiniAI Sentinel security monitoring",
       "Enhanced tracker protection",
       "WebRTC privacy protections",
       "Performance and compatibility improvements",
     ],
-    notesMarkdown: `
-## Darkelf Shadow
 
-Darkelf Shadow is the flagship browser in the Darkelf Browser ecosystem,
-built with PySide6 and QtWebEngine for macOS, Windows and Linux.
+    notesMarkdown: `
+## Darkelf Shadow 7.0.8
+
+Darkelf Shadow is the flagship browser in the Darkelf Browser ecosystem.
+
+Built with PySide6 and QtWebEngine, Shadow supports macOS, Windows and Linux.
+
+### PyPI Installation
+
+\`\`\`bash
+pip install darkelf-shadow
+\`\`\`
+
+The PyPI distribution provides the cross-platform installation path for
+macOS, Windows and Linux.
+
+A packaged macOS application is also available separately as a DMG release.
 
 ## What's New
 
@@ -148,25 +207,36 @@ built with PySide6 and QtWebEngine for macOS, Windows and Linux.
 - Rendering fixes.
 - General stability improvements.
 `,
+
     artifacts: [
+      // PyPI — macOS
+      {
+        platform: "macos",
+        arch: "any",
+        fileType: "pypi",
+        url: "",
+        installCommand: "pip install darkelf-shadow",
+      },
+
+      // PyPI — Windows
       {
         platform: "windows",
-        arch: "x64",
-        fileType: "exe",
+        arch: "any",
+        fileType: "pypi",
         url: "",
-        sizeBytes: 0,
-        sha256: "",
-        notesUrl: "",
+        installCommand: "pip install darkelf-shadow",
       },
+
+      // PyPI — Linux
       {
         platform: "linux",
-        arch: "x64",
-        fileType: "appimage",
+        arch: "any",
+        fileType: "pypi",
         url: "",
-        sizeBytes: 0,
-        sha256: "",
-        notesUrl: "",
+        installCommand: "pip install darkelf-shadow",
       },
+
+      // Packaged macOS application
       {
         platform: "macos",
         arch: "universal",
