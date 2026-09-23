@@ -6,31 +6,33 @@ import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title:
-    "Darkelf Download Center — Hardened Privacy Browsers for macOS, Linux & Windows",
+    "Darkelf Download Center — Privacy Browsers for macOS, Linux & Windows",
   description:
-    "Download Darkelf Cocoa (macOS WebKit) and Darkelf Shadow (PySide6). Non-persistent, anti-fingerprinting, SHA-256 verified. Free and open-source.",
+    "Get Darkelf Shadow, the flagship cross-platform privacy browser for macOS, Windows and Linux, or Darkelf Cocoa, the lightweight native macOS WebKit browser available through PyPI.",
   keywords: [
-    "download privacy browser",
-    "Darkelf Cocoa download",
+    "Darkelf browser",
+    "Darkelf download",
     "Darkelf Shadow download",
-    "macOS privacy browser download",
-    "Linux privacy browser download",
-    "Windows privacy browser download",
-    "hardened browser download",
+    "Darkelf Cocoa PyPI",
+    "Darkelf Cocoa pip install",
+    "macOS privacy browser",
+    "Linux privacy browser",
+    "Windows privacy browser",
+    "privacy browser download",
+    "hardened privacy browser",
     "free privacy browser",
-    "open source browser download",
-    "SHA-256 browser",
-    "secure browser download",
-    "anti-fingerprinting browser download",
-    "non-persistent browser download",
+    "open source privacy browser",
+    "anti-fingerprinting browser",
+    "non-persistent browser",
+    "PyPI privacy browser",
   ],
   alternates: {
     canonical: "/download-center",
   },
   openGraph: {
-    title: "Darkelf Download Center — Hardened Privacy Browsers",
+    title: "Darkelf Download Center — Shadow & Cocoa",
     description:
-      "Free, open-source hardened privacy browsers. Darkelf Cocoa for macOS and Darkelf Shadow for Windows and Linux. SHA-256 verified.",
+      "Darkelf Shadow is the flagship cross-platform privacy browser for macOS, Windows and Linux. Darkelf Cocoa is the lightweight native macOS WebKit browser distributed through PyPI.",
     url: "https://darkelfbrowser.com/download-center",
     type: "website",
   },
@@ -63,15 +65,25 @@ export default function DownloadCenterPage() {
       <Nav activePath="/download-center" />
 
       <main>
-        <section className="dc-hero section" aria-labelledby="dc-hero-title">
+        <section
+          className="dc-hero section"
+          aria-labelledby="dc-hero-title"
+        >
           <div className="eyebrow">
             <span className="dot" aria-hidden="true" />
-            <span>SECURE • VERIFIED • NON-PERSISTENT</span>
+            <span>PRIVATE • OPEN SOURCE • CROSS-PLATFORM</span>
           </div>
 
           <h1 id="dc-hero-title" className="dc-hero__title">
             Darkelf Download Center
           </h1>
+
+          <p>
+            Choose Darkelf Shadow for the flagship Darkelf browsing
+            experience across macOS, Windows and Linux, or Darkelf Cocoa
+            for a lightweight native macOS browser built with Cocoa,
+            WebKit and PyObjC.
+          </p>
         </section>
 
         <section className="section">
@@ -86,29 +98,32 @@ export default function DownloadCenterPage() {
           aria-labelledby="dc-philosophy-title"
         >
           <div className="section-title">
-            <h2 id="dc-philosophy-title">Non-Persistent By Design</h2>
-            <p>No data leaves the session. No exceptions.</p>
+            <h2 id="dc-philosophy-title">Privacy By Design</h2>
+            <p>
+              Designed to minimize persistent browsing data and unnecessary
+              tracking.
+            </p>
           </div>
 
           <div className="grid">
             {[
               {
                 icon: "bi-trash3",
-                title: "Session Wipe",
+                title: "Session Privacy",
                 body:
-                  "Cookies, cache, and history are destroyed on exit. Nothing survives the shutdown.",
+                  "Darkelf is designed to minimize persistent browsing data and reduce what remains after a browsing session.",
               },
               {
                 icon: "bi-shield-lock",
-                title: "Isolated Tabs",
+                title: "Privacy Protection",
                 body:
-                  "Each tab runs in a contained context. Cross-tab contamination is blocked by design.",
+                  "Built-in protections target trackers, fingerprinting techniques, and unwanted network activity.",
               },
               {
                 icon: "bi-eye-slash",
                 title: "Zero Telemetry",
                 body:
-                  "No analytics, no crash reporting, no beacons. Your activity is yours alone.",
+                  "Darkelf does not depend on behavioral analytics or advertising telemetry to operate.",
               },
             ].map((item) => (
               <div className="card" key={item.title}>
