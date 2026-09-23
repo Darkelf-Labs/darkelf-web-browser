@@ -1,4 +1,5 @@
-import type { ProductId, Platform, Release } from "@/lib/releases";
+import type { Platform, Release } from "@/lib/releases";
+
 import {
   getArtifact,
   formatBytes,
@@ -23,14 +24,26 @@ export function DownloadCTA({
 }: DownloadCTAProps) {
   const artifact = getArtifact(release, platform);
 
-  const isPlaceholder = !artifact || artifact.url.includes("TODO_");
-  const isValid = artifact && isAllowedDownloadUrl(artifact.url) && !isPlaceholder;
+  const isPlaceholder =
+    !artifact ||
+    artifact.url.includes("TODO_");
+
+  const isValid =
+    Boolean(artifact) &&
+    isAllowedDownloadUrl(artifact!.url) &&
+    !isPlaceholder;
 
   const label = `Download for ${platformLabel(platform)} (${
     artifact ? fileTypeLabel(artifact.fileType) : ""
   })`;
 
-  const size = artifact ? ` — ${formatBytes(artifact.sizeBytes)}` : "";
+  // Normalize optional sizeBytes to a definite number.
+  const sizeBytes = artifact?.sizeBytes ?? 0;
+
+  const size =
+    sizeBytes > 0
+      ? ` — ${formatBytes(sizeBytes)}`
+      : "";
 
   if (!isValid) {
     if (fallbackUrl) {
@@ -52,19 +65,35 @@ export function DownloadCTA({
             }`}
             aria-hidden="true"
           />
-          <span>{platformLabel(platform)} — View on GitHub</span>
+
+          <span>
+            {platformLabel(platform)} — View on GitHub
+          </span>
         </a>
       );
     }
+
     return (
-      <span className={`dl-cta dl-cta--pending ${className}`} aria-label={`${label} — not yet available`}>
-        <i className="bi bi-hourglass-split" aria-hidden="true" />
-        <span>{platformLabel(platform)} — Coming Soon</span>
+      <span
+        className={`dl-cta dl-cta--pending ${className}`}
+        aria-label={`${label} — not yet available`}
+      >
+        <i
+          className="bi bi-hourglass-split"
+          aria-hidden="true"
+        />
+
+        <span>
+          {platformLabel(platform)} — Coming Soon
+        </span>
       </span>
     );
   }
 
-  const confirmUrl = `/download?product=${release.product}&platform=${platform}&version=${encodeURIComponent(release.version)}`;
+  const confirmUrl =
+    `/download?product=${release.product}` +
+    `&platform=${platform}` +
+    `&version=${encodeURIComponent(release.version)}`;
 
   return (
     <a
@@ -82,6 +111,7 @@ export function DownloadCTA({
         }`}
         aria-hidden="true"
       />
+
       <span>{label}</span>
     </a>
   );
