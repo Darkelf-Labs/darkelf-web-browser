@@ -86,7 +86,7 @@ export const releases: Release[] = [
     channel: "stable",
     version: "7.0.7",
 
-    // Keep/change this once the actual Cocoa 7.0.7 release date is confirmed.
+    // Replace if the actual Cocoa 7.0.7 release date differs.
     dateISO: "2026-07-28",
 
     releasePageUrl: "",
@@ -157,10 +157,13 @@ pip install darkelf-cocoa
     product: "shadow",
     channel: "stable",
     version: "7.0.8",
-    dateISO: "2026-07-28",
+    dateISO: "2026-07-15",
 
-    releasePageUrl: "",
-    zipballUrl: "",
+    releasePageUrl:
+      "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.8",
+
+    zipballUrl:
+      "https://api.github.com/repos/Darkelf-Labs/Darkelf-Shadow-CE/zipball/v.7.0.8",
 
     highlights: [
       "Flagship Darkelf privacy browser built with PySide6 and QtWebEngine",
@@ -190,25 +193,40 @@ pip install darkelf-shadow
 The PyPI distribution provides the cross-platform installation path for
 macOS, Windows and Linux.
 
-A packaged macOS application is also available separately as a signed DMG release.
+A signed and notarized macOS application is also available separately
+as a DMG release.
 
 ## What's New
 
-- Improved request interception.
-- Enhanced tracker blocking.
-- Better MiniAI Sentinel detection.
-- Updated browser internals.
+- Added fast declarative tracker blocking.
+- Improved network-rule evaluation performance.
+- Added indexed candidate selection for network rules.
+- Reduced synchronous filtering overhead.
+- Improved request-interceptor performance.
+- Improved canvas privacy-policy consistency.
+- Expanded Microsoft and Outlook compatibility handling.
+- Improved WebAuthn and security-key compatibility.
 
 ## Security
 
 - Improved WebRTC protections.
+- Improved canvas privacy behavior.
 - Better privacy defaults.
 - Hardened browsing environment.
+- Continued Developer ID signing and Apple notarization.
+- DMG SHA-256 integrity verification.
+
+## Performance
+
+- Reduced network-filter evaluation overhead.
+- Improved responsiveness on resource-heavy websites.
+- Reduced redundant request processing.
+- Improved scrolling and page-load responsiveness.
 
 ## Fixes
 
-- Startup reliability improvements.
-- Rendering fixes.
+- Improved website compatibility.
+- Improved authentication compatibility.
 - General stability improvements.
 `,
 
@@ -252,13 +270,16 @@ A packaged macOS application is also available separately as a signed DMG releas
         arch: "universal",
         fileType: "dmg",
 
-        // IMPORTANT:
-        // Put the real Darkelf Shadow 7.0.8 DMG asset URL here.
-        url: "",
+        url:
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.8/Darkelf-Shadow-7.0.8.dmg",
 
-        sizeBytes: 0,
-        sha256: "",
-        notesUrl: "",
+        sizeBytes: 325490110,
+
+        sha256:
+          "6c374c83ac2d6497272b8e3d00508e286fbda0ad69548912d193c209e5068d28",
+
+        notesUrl:
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.8",
       },
     ],
   },
