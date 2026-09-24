@@ -78,13 +78,15 @@ export interface Release {
 
 export const releases: Release[] = [
   // -------------------------------------------------------------------------
-  // Darkelf Cocoa 7.0.8
+  // Darkelf Cocoa 7.0.7
   // -------------------------------------------------------------------------
 
   {
     product: "cocoa",
     channel: "stable",
-    version: "7.0.8",
+    version: "7.0.7",
+
+    // Keep/change this once the actual Cocoa 7.0.7 release date is confirmed.
     dateISO: "2026-07-28",
 
     releasePageUrl: "",
@@ -101,7 +103,7 @@ export const releases: Release[] = [
     ],
 
     notesMarkdown: `
-## Darkelf Cocoa 7.0.8
+## Darkelf Cocoa 7.0.7
 
 Darkelf Cocoa is the lightweight native macOS browser in the Darkelf
 Browser ecosystem.
@@ -140,6 +142,8 @@ pip install darkelf-cocoa
         arch: "any",
         fileType: "pypi",
         url: "",
+        sizeBytes: 0,
+        sha256: "",
         installCommand: "pip install darkelf-cocoa",
       },
     ],
@@ -186,7 +190,7 @@ pip install darkelf-shadow
 The PyPI distribution provides the cross-platform installation path for
 macOS, Windows and Linux.
 
-A packaged macOS application is also available separately as a DMG release.
+A packaged macOS application is also available separately as a signed DMG release.
 
 ## What's New
 
@@ -215,6 +219,8 @@ A packaged macOS application is also available separately as a DMG release.
         arch: "any",
         fileType: "pypi",
         url: "",
+        sizeBytes: 0,
+        sha256: "",
         installCommand: "pip install darkelf-shadow",
       },
 
@@ -224,6 +230,8 @@ A packaged macOS application is also available separately as a DMG release.
         arch: "any",
         fileType: "pypi",
         url: "",
+        sizeBytes: 0,
+        sha256: "",
         installCommand: "pip install darkelf-shadow",
       },
 
@@ -233,15 +241,21 @@ A packaged macOS application is also available separately as a DMG release.
         arch: "any",
         fileType: "pypi",
         url: "",
+        sizeBytes: 0,
+        sha256: "",
         installCommand: "pip install darkelf-shadow",
       },
 
-      // Packaged macOS application
+      // Signed macOS DMG
       {
         platform: "macos",
         arch: "universal",
         fileType: "dmg",
+
+        // IMPORTANT:
+        // Put the real Darkelf Shadow 7.0.8 DMG asset URL here.
         url: "",
+
         sizeBytes: 0,
         sha256: "",
         notesUrl: "",
