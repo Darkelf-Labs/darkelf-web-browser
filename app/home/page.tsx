@@ -123,7 +123,7 @@ export default function HomePage() {
               <p>
                 A lightweight native macOS privacy browser built with Cocoa,
                 WebKit, and PyObjC. Cocoa provides a streamlined alternative
-                for users who prefer Apple's native browser technology.
+                for users who prefer Apple&apos;s native browser technology.
               </p>
 
               <Link href="/download-center" className="btn">
