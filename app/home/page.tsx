@@ -96,7 +96,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid entry-grid">
+          <div className="grid entry-grid browser-grid">
             <div className="card">
               <i className="bi bi-shield-lock" aria-hidden="true" />
 
