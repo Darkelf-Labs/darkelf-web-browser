@@ -208,13 +208,15 @@ export function ProductCard({
               </span>
             </div>
 
-            <code className="mono">
-              {pipCommand}
-            </code>
+            <div className="dc-install-option__command-row">
+              <code className="mono dc-install-option__command">
+                {pipCommand}
+              </code>
 
-            <span className="dc-os-hint dc-os-hint--neutral">
-              {pipPlatformLabel}
-            </span>
+              <span className="dc-install-option__platform">
+                {pipPlatformLabel}
+              </span>
+            </div>
           </div>
 
           {/* Shadow macOS DMG */}
