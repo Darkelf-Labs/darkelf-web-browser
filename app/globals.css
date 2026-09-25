@@ -258,6 +258,62 @@ main{position:relative;z-index:2}
 .entry-legal .section-title p{max-width:78ch;margin:0 auto}
 @media(max-width:980px){.entry-grid{grid-template-columns:1fr}}
 
+.browser-grid{
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:32px;
+  width:min(1120px, 100%);
+  margin-left:auto;
+  margin-right:auto;
+  align-items:stretch;
+}
+
+.browser-grid .card{
+  width:100%;
+  min-height:330px;
+  padding:34px 34px 30px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+}
+
+.browser-grid .card p{
+  margin-bottom:28px;
+}
+
+.browser-grid .card .btn{
+  margin-top:auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:46px;
+  padding:11px 22px;
+  white-space:nowrap;
+}
+
+@media(max-width:980px){
+  .browser-grid{
+    grid-template-columns:1fr;
+    width:min(680px, 100%);
+    gap:24px;
+  }
+
+  .browser-grid .card{
+    min-height:0;
+  }
+}
+
+@media(max-width:720px){
+  .browser-grid .card{
+    padding:26px 22px;
+  }
+
+  .browser-grid .card .btn{
+    width:100%;
+    white-space:normal;
+  }
+}
+
 .releases-bg-video-wrap{
   position:fixed;
   inset:0;
