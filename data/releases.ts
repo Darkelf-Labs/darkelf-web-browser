@@ -150,20 +150,20 @@ pip install darkelf-cocoa
   },
 
   // -------------------------------------------------------------------------
-  // Darkelf Shadow 7.0.8
+  // Darkelf Shadow 7.0.9
   // -------------------------------------------------------------------------
 
   {
     product: "shadow",
     channel: "stable",
-    version: "7.0.8",
-    dateISO: "2026-07-15",
+    version: "7.0.9",
+    dateISO: "2026-09-25",
 
     releasePageUrl:
-      "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.8",
+      "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.9",
 
     zipballUrl:
-      "https://api.github.com/repos/Darkelf-Labs/Darkelf-Shadow-CE/zipball/v.7.0.8",
+      "https://api.github.com/repos/Darkelf-Labs/Darkelf-Shadow-CE/zipball/v.7.0.9",
 
     highlights: [
       "Flagship Darkelf privacy browser built with PySide6 and QtWebEngine",
@@ -178,7 +178,7 @@ pip install darkelf-cocoa
     ],
 
     notesMarkdown: `
-## Darkelf Shadow 7.0.8
+## Darkelf Shadow 7.0.9
 
 Darkelf Shadow is the flagship browser in the Darkelf Browser ecosystem.
 
@@ -271,15 +271,15 @@ as a DMG release.
         fileType: "dmg",
 
         url:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.8/Darkelf-Shadow-7.0.8.dmg",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.9/Darkelf-Shadow-7.0.9.dmg",
 
         sizeBytes: 325490110,
 
         sha256:
-          "6c374c83ac2d6497272b8e3d00508e286fbda0ad69548912d193c209e5068d28",
+          "26f15be78dee0235924f1170cafb91e39959b9abaa4cc40516303549d9ef1e45",
 
         notesUrl:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.8",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.9",
       },
     ],
   },
