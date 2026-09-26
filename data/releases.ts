@@ -271,7 +271,7 @@ as a DMG release.
         fileType: "dmg",
 
         url:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.9/Darkelf-Shadow-7.0.10.dmg",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.10/Darkelf-Shadow-7.0.10.dmg",
 
         sizeBytes: 325490110,
 
