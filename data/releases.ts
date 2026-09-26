@@ -160,10 +160,10 @@ pip install darkelf-cocoa
     dateISO: "2026-09-25",
 
     releasePageUrl:
-      "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.9",
+      "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.10",
 
     zipballUrl:
-      "https://api.github.com/repos/Darkelf-Labs/Darkelf-Shadow-CE/zipball/v.7.0.9",
+      "https://api.github.com/repos/Darkelf-Labs/Darkelf-Shadow-CE/zipball/v.7.0.10",
 
     highlights: [
       "Flagship Darkelf privacy browser built with PySide6 and QtWebEngine",
@@ -271,7 +271,7 @@ as a DMG release.
         fileType: "dmg",
 
         url:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.9/Darkelf-Shadow-7.0.9.dmg",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.9/Darkelf-Shadow-7.0.10.dmg",
 
         sizeBytes: 325490110,
 
@@ -279,7 +279,7 @@ as a DMG release.
           "26f15be78dee0235924f1170cafb91e39959b9abaa4cc40516303549d9ef1e45",
 
         notesUrl:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.9",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.10",
       },
     ],
   },
