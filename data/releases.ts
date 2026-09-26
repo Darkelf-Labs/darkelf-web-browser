@@ -273,7 +273,7 @@ as a DMG release.
         url:
           "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.10/Darkelf-Shadow-7.0.10.dmg",
 
-        sizeBytes: 325490110,
+        sizeBytes: 249561088,
 
         sha256:
           "26f15be78dee0235924f1170cafb91e39959b9abaa4cc40516303549d9ef1e45",
