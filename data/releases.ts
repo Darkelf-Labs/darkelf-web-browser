@@ -150,13 +150,13 @@ pip install darkelf-cocoa
   },
 
   // -------------------------------------------------------------------------
-  // Darkelf Shadow 7.0.9
+  // Darkelf Shadow 7.0.10
   // -------------------------------------------------------------------------
 
   {
     product: "shadow",
     channel: "stable",
-    version: "7.0.9",
+    version: "7.0.10",
     dateISO: "2026-09-25",
 
     releasePageUrl:
@@ -178,7 +178,7 @@ pip install darkelf-cocoa
     ],
 
     notesMarkdown: `
-## Darkelf Shadow 7.0.9
+## Darkelf Shadow 7.0.10
 
 Darkelf Shadow is the flagship browser in the Darkelf Browser ecosystem.
 
