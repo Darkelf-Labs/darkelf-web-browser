@@ -666,10 +666,12 @@ h1{
   text-align:center;
 }
 .section-title > .section-title-actions{
-  position:absolute;
-  right:0;
-  top:50%;
-  transform:translateY(-50%);
+  position:static;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:20px;
+  transform:none;
 }
 .section-title h2{
   margin:0;
