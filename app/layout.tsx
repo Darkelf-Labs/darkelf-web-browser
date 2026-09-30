@@ -4,7 +4,6 @@ import './globals.css';
 // Self-hosted (bundled by Next, served from same origin) — no third-party CDN.
 // Keeps the CSP tight and avoids leaking visitor IPs to a CDN.
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { LiquidGlass } from '@/components/LiquidGlass';
 
 const mono = JetBrains_Mono({
   subsets: ['latin'],
@@ -299,7 +298,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={mono.className}>
-        <LiquidGlass />
         {children}
       </body>
     </html>
