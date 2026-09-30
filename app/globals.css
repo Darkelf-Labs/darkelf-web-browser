@@ -2369,3 +2369,302 @@ header{
   *,*::before,*::after{scroll-behavior:auto !important}
   .darkelf-product,.darkelf-info-card,.darkelf-security-card,.btn{transition:none !important;transform:none !important}
 }
+
+/* ============================================================
+   DARKELF RELEASES — LIGHTWEIGHT STATIC DESIGN
+   Shadow = Deep Purple
+   Cocoa  = Darkelf Green
+   ============================================================ */
+
+.darkelf-releases-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      850px 560px at 10% 8%,
+      rgba(124,77,255,.15),
+      transparent 68%
+    ),
+    radial-gradient(
+      850px 560px at 90% 12%,
+      rgba(54,232,137,.09),
+      transparent 68%
+    ),
+    linear-gradient(
+      155deg,
+      #07080d 0%,
+      #0a0c13 48%,
+      #07090d 100%
+    );
+}
+
+.darkelf-releases-backdrop::after{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.016) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.016) 1px,
+      transparent 1px
+    );
+
+  background-size:48px 48px;
+
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.72),
+      transparent 88%
+    );
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,.72),
+      transparent 88%
+    );
+}
+
+.darkelf-releases-page{
+  position:relative;
+  z-index:2;
+}
+
+.darkelf-releases-hero{
+  padding-top:72px;
+  padding-bottom:30px;
+}
+
+.darkelf-releases-hero .section-title{
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.darkelf-releases-hero h1{
+  margin:10px 0 16px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--darkelf-purple-bright),
+      #ffffff 48%,
+      var(--darkelf-green-bright)
+    );
+
+  background-clip:text;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  text-shadow:none;
+}
+
+.darkelf-releases-intro{
+  max-width:780px;
+  margin:0 auto !important;
+
+  color:rgba(238,242,246,.76) !important;
+
+  font-size:1rem !important;
+  line-height:1.7;
+}
+
+.darkelf-releases-sub{
+  max-width:680px;
+  margin:12px auto 0 !important;
+
+  color:rgba(238,242,246,.52) !important;
+
+  font-size:.91rem !important;
+}
+
+.darkelf-releases-download{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  background:#12151d !important;
+
+  border-color:
+    rgba(255,255,255,.16) !important;
+}
+
+/* Shadow / Cocoa identity bar */
+
+.darkelf-release-identities{
+  width:min(760px,100%);
+
+  margin:38px auto 0;
+
+  padding:17px 24px;
+
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:22px;
+
+  background:rgba(15,17,24,.94);
+
+  border:
+    1px solid rgba(255,255,255,.10);
+
+  border-radius:14px;
+
+  box-shadow:
+    0 14px 36px rgba(0,0,0,.24);
+}
+
+.darkelf-release-identity{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.darkelf-release-identity:last-child{
+  justify-content:flex-end;
+  text-align:left;
+}
+
+.darkelf-release-identity__mark{
+  width:40px;
+  height:40px;
+
+  flex:0 0 40px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:10px;
+
+  background:#0c0e14;
+
+  border:
+    1px solid rgba(255,255,255,.12);
+}
+
+.darkelf-release-identity strong{
+  display:block;
+
+  color:#fff;
+
+  font-size:.92rem;
+  letter-spacing:.04em;
+}
+
+.darkelf-release-identity small{
+  display:block;
+
+  margin-top:2px;
+
+  color:rgba(255,255,255,.45);
+
+  font-size:.70rem;
+}
+
+.darkelf-release-identity--shadow
+.darkelf-release-identity__mark{
+  color:var(--darkelf-purple-bright);
+
+  border-color:
+    rgba(124,77,255,.38);
+}
+
+.darkelf-release-identity--shadow strong{
+  color:var(--darkelf-purple-bright);
+}
+
+.darkelf-release-identity--cocoa
+.darkelf-release-identity__mark{
+  color:var(--darkelf-green-bright);
+
+  border-color:
+    rgba(54,232,137,.34);
+}
+
+.darkelf-release-identity--cocoa strong{
+  color:var(--darkelf-green);
+}
+
+.darkelf-release-divider{
+  width:1px;
+  height:38px;
+
+  background:
+    rgba(255,255,255,.10);
+}
+
+/* Release content */
+
+.darkelf-release-list-section{
+  padding-top:22px;
+}
+
+.darkelf-release-list-section
+.releases-filters{
+  background:#101219;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.20);
+}
+
+.darkelf-release-list-section
+.version-timeline__item{
+  background:#101219;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.20);
+}
+
+/*
+   Keep release cards lightweight.
+   No backdrop blur.
+   No compositor promotion.
+*/
+
+.darkelf-release-list-section
+.version-timeline__item,
+.darkelf-release-list-section
+.releases-filters{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  will-change:auto !important;
+}
+
+/* Responsive */
+
+@media(max-width:720px){
+
+  .darkelf-releases-hero{
+    padding-top:54px;
+  }
+
+  .darkelf-release-identities{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+
+  .darkelf-release-divider{
+    width:100%;
+    height:1px;
+  }
+
+  .darkelf-release-identity:last-child{
+    justify-content:flex-start;
+  }
+}
