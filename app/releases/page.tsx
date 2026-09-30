@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getAllReleases } from "@/lib/releases";
 import { Nav } from "@/components/Nav";
 import { ReleasesFilterClient } from "@/components/ReleasesFilterClient";
-import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: "Darkelf Browser Releases — Shadow & Cocoa",
@@ -40,52 +39,80 @@ export default function ReleasesPage() {
 
   return (
     <>
-      <div className="releases-bg-video-wrap" aria-hidden="true">
-        <video
-          className="releases-bg-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        >
-          <source src={asset("/cyber_yellow.mp4")} type="video/mp4" />
-        </video>
-        <div className="releases-bg-overlay" />
-      </div>
-
-      <div className="orb one" aria-hidden="true" />
-      <div className="orb two" aria-hidden="true" />
+      <div className="darkelf-releases-backdrop" aria-hidden="true" />
 
       <Nav activePath="/releases" />
 
-      <main>
-        <section className="section" aria-labelledby="releases-title">
+      <main className="darkelf-releases-page">
+        <section
+          className="section darkelf-releases-hero"
+          aria-labelledby="releases-title"
+        >
           <div className="section-title">
             <div>
-              <h1 id="releases-title">Darkelf Browser Releases</h1>
+              <span className="darkelf-section-kicker">
+                RELEASE HISTORY
+              </span>
 
-              <p>
+              <h1 id="releases-title">
+                Darkelf Browser Releases
+              </h1>
+
+              <p className="darkelf-releases-intro">
                 Darkelf Shadow is the flagship Darkelf privacy browser for
                 macOS, Windows, and Linux. Darkelf Cocoa is the lightweight
                 native macOS browser built with Cocoa, WebKit, and PyObjC and
                 distributed through PyPI.
               </p>
 
-              <p>
+              <p className="darkelf-releases-sub">
                 Browse the release history below and filter by product,
                 channel, or platform.
               </p>
             </div>
 
             <div className="section-title-actions">
-              <Link href="/download-center" className="btn">
+              <Link
+                href="/download-center"
+                className="btn darkelf-releases-download"
+              >
                 <i className="bi bi-download" aria-hidden="true" />
                 Download Center
               </Link>
             </div>
           </div>
 
+          <div className="darkelf-release-identities" aria-hidden="true">
+            <div className="darkelf-release-identity darkelf-release-identity--shadow">
+              <span className="darkelf-release-identity__mark">
+                <i className="bi bi-shield-lock" />
+              </span>
+
+              <span>
+                <strong>Shadow</strong>
+                <small>QtWebEngine • Cross-platform</small>
+              </span>
+            </div>
+
+            <div className="darkelf-release-divider" />
+
+            <div className="darkelf-release-identity darkelf-release-identity--cocoa">
+              <span className="darkelf-release-identity__mark">
+                <i className="bi bi-apple" />
+              </span>
+
+              <span>
+                <strong>Cocoa</strong>
+                <small>WebKit • Native macOS</small>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className="section darkelf-release-list-section"
+          aria-label="Darkelf release history"
+        >
           {releases.length === 0 ? (
             <div className="releases-empty" role="status">
               <i className="bi bi-inbox" aria-hidden="true" />
@@ -99,7 +126,9 @@ export default function ReleasesPage() {
 
       <footer>
         © 2026 Dr. Kevin Moore — MIT Licensed
-        <div className="line">Built for those who refuse to be watched.</div>
+        <div className="line">
+          Built for those who refuse to be watched.
+        </div>
       </footer>
     </>
   );
