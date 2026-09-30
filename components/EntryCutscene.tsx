@@ -6,27 +6,46 @@ import { asset } from "@/lib/asset";
 const frames = [
   {
     label: "WHO",
+    index: "01",
     title: "We are Darkelf.",
-    body: "Engineers building privacy-first systems for high-stakes security workflows.",
+    body:
+      "Engineers building privacy-first systems for high-stakes security workflows.",
+    tone: "shadow",
   },
   {
     label: "WHAT",
-    title: "Hardened, forensic-resistant tooling.",
-    body: "Non-persistent sessions, anti-fingerprinting controls, and strict operational discipline.",
+    index: "02",
+    title: "Hardened. Ephemeral. Private.",
+    body:
+      "Non-persistent sessions, anti-fingerprinting controls, and strict operational discipline.",
+    tone: "shadow",
   },
   {
     label: "WHY",
+    index: "03",
     title: "Because exposure is a liability.",
-    body: "We reduce traceability, strengthen confidentiality, and defend investigative integrity.",
+    body:
+      "We reduce traceability, strengthen confidentiality, and defend investigative integrity.",
+    tone: "signal",
   },
   {
     label: "WHERE",
-    title: "From research labs to live investigations.",
-    body: "Built for lawful cybersecurity analysis across macOS, Linux, and Windows.",
+    index: "04",
+    title: "Built for the real web.",
+    body:
+      "Privacy-first browser technology for lawful security work across macOS, Linux, and Windows.",
+    tone: "dual",
   },
 ] as const;
 
 const SESSION_KEY = "darkelf_cutscene_seen";
+
+const FRAME_DURATION_MS = 5000;
+const FADE_LEAD_MS = 900;
+const MUSIC_DELAY_MS = 2500;
+const MUSIC_FADE_MS = 1400;
+const MUSIC_FADE_OUT_MS = 900;
+
 function getSessionFlag(key: string): string | null {
   try {
     return window.sessionStorage.getItem(key);
@@ -39,14 +58,9 @@ function setSessionFlag(key: string, value: string): void {
   try {
     window.sessionStorage.setItem(key, value);
   } catch {
-    // Safari private browsing / storage restrictions
+    return;
   }
 }
-const FRAME_DURATION_MS = 16000; // 16s per frame for readability
-const FADE_LEAD_MS = 1500; // start fading shortly before the final hide
-const MUSIC_DELAY_MS = 30000; // start music at 30s mark
-const MUSIC_FADE_MS = 2000; // fade in over 2s once unmuted
-const MUSIC_FADE_OUT_MS = 1500; // fade out before exiting
 
 interface EntryCutsceneProps {
   onComplete?: () => void;
@@ -57,6 +71,7 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
   const [fading, setFading] = useState(false);
   const [frameIndex, setFrameIndex] = useState(0);
   const [needsUserAudio, setNeedsUserAudio] = useState(false);
+
   const timers = useRef<{
     cycle?: ReturnType<typeof setInterval>;
     fade?: ReturnType<typeof setTimeout>;
@@ -65,132 +80,173 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
     fadeIn?: ReturnType<typeof setInterval>;
     fadeOut?: ReturnType<typeof setInterval>;
   }>({});
+
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const startTs = useRef<number | null>(null);
 
-  const startAudioWithFade = () => {
-    const audio = audioRef.current;
-    if (!audio) return Promise.reject();
-
-    // Clear any existing fade timer before starting a new one
+  const clearFadeIn = () => {
     if (timers.current.fadeIn) {
       clearInterval(timers.current.fadeIn);
       timers.current.fadeIn = undefined;
     }
+  };
+
+  const clearFadeOut = () => {
+    if (timers.current.fadeOut) {
+      clearInterval(timers.current.fadeOut);
+      timers.current.fadeOut = undefined;
+    }
+  };
+
+  const startAudioWithFade = () => {
+    const audio = audioRef.current;
+
+    if (!audio) {
+      return Promise.reject(new Error("Intro audio is unavailable."));
+    }
+
+    clearFadeIn();
+    clearFadeOut();
 
     audio.muted = false;
     audio.volume = 0;
 
-    const target = 1;
-    const steps = Math.max(1, Math.floor(MUSIC_FADE_MS / 150));
-    const delta = target / steps;
-    let vol = audio.volume;
+    const steps = Math.max(
+      1,
+      Math.floor(MUSIC_FADE_MS / 100)
+    );
 
-    const runFade = () => {
-      timers.current.fadeIn = setInterval(() => {
-        vol = Math.min(target, vol + delta);
-        audio.volume = vol;
-        if (vol >= target && timers.current.fadeIn) {
-          clearInterval(timers.current.fadeIn);
-          timers.current.fadeIn = undefined;
-        }
-      }, 150);
-    };
+    const delta = 0.55 / steps;
+    let volume = 0;
 
     return audio
       .play()
       .then(() => {
         setNeedsUserAudio(false);
-        runFade();
+
+        timers.current.fadeIn = setInterval(() => {
+          volume = Math.min(0.55, volume + delta);
+          audio.volume = volume;
+
+          if (volume >= 0.55) {
+            clearFadeIn();
+          }
+        }, 100);
       })
-      .catch((err) => {
+      .catch((error) => {
         setNeedsUserAudio(true);
-        throw err;
+        throw error;
       });
   };
 
   const fadeOutAndStop = (): Promise<void> => {
     const audio = audioRef.current;
-    if (!audio) return Promise.resolve();
 
-    // Clear any in-progress fade-in
-    if (timers.current.fadeIn) {
-      clearInterval(timers.current.fadeIn);
-      timers.current.fadeIn = undefined;
+    if (!audio) {
+      return Promise.resolve();
     }
 
-    const steps = Math.max(1, Math.floor(MUSIC_FADE_OUT_MS / 150));
+    clearFadeIn();
+    clearFadeOut();
+
+    if (audio.paused || audio.volume <= 0) {
+      audio.pause();
+      audio.currentTime = 0;
+      return Promise.resolve();
+    }
+
+    const steps = Math.max(
+      1,
+      Math.floor(MUSIC_FADE_OUT_MS / 100)
+    );
+
     const delta = audio.volume / steps;
-    let vol = audio.volume;
-
-    if (timers.current.fadeOut) {
-      clearInterval(timers.current.fadeOut);
-      timers.current.fadeOut = undefined;
-    }
+    let volume = audio.volume;
 
     return new Promise((resolve) => {
       timers.current.fadeOut = setInterval(() => {
-        vol = Math.max(0, vol - delta);
-        audio.volume = vol;
-        if (vol <= 0 && timers.current.fadeOut) {
-          clearInterval(timers.current.fadeOut);
-          timers.current.fadeOut = undefined;
+        volume = Math.max(0, volume - delta);
+        audio.volume = volume;
+
+        if (volume <= 0) {
+          clearFadeOut();
           audio.pause();
           audio.currentTime = 0;
           resolve();
         }
-      }, 150);
+      }, 100);
     });
   };
 
-  useEffect(() => {
-    const currentTimers = timers.current;
+  const clearSequenceTimers = () => {
+    if (timers.current.cycle) {
+      clearInterval(timers.current.cycle);
+      timers.current.cycle = undefined;
+    }
 
-    // Only show once per browser session.
-    // Use the guarded helper — raw sessionStorage access throws in Safari
-    // private browsing / restricted-storage modes and crashes the page.
+    if (timers.current.fade) {
+      clearTimeout(timers.current.fade);
+      timers.current.fade = undefined;
+    }
+
+    if (timers.current.hide) {
+      clearTimeout(timers.current.hide);
+      timers.current.hide = undefined;
+    }
+
+    if (timers.current.music) {
+      clearTimeout(timers.current.music);
+      timers.current.music = undefined;
+    }
+
+    clearFadeIn();
+  };
+
+  useEffect(() => {
     if (getSessionFlag(SESSION_KEY)) {
       onComplete?.();
       return;
     }
 
-    // Mark as seen immediately so re-renders/navigation won't replay it
     setSessionFlag(SESSION_KEY, "1");
     setVisible(true);
 
-    audioRef.current = new Audio(asset("/intro-music.mp3"));
-    audioRef.current.loop = true;
-    audioRef.current.preload = "auto";
-    audioRef.current.muted = true;
-    audioRef.current.volume = 0;
-    startTs.current = Date.now();
+    const audio = new Audio(asset("/intro-music.mp3"));
 
-    // Try to prime playback muted to satisfy autoplay policies (mobile/desktop)
-    audioRef.current
+    audioRef.current = audio;
+    audio.loop = true;
+    audio.preload = "metadata";
+    audio.muted = true;
+    audio.volume = 0;
+
+    audio
       .play()
       .then(() => setNeedsUserAudio(false))
       .catch(() => setNeedsUserAudio(true));
 
-    const totalDuration = FRAME_DURATION_MS * frames.length;
+    const totalDuration =
+      FRAME_DURATION_MS * frames.length;
 
-    currentTimers.cycle = setInterval(() => {
-      setFrameIndex((prev) => (prev + 1 < frames.length ? prev + 1 : prev));
+    timers.current.cycle = setInterval(() => {
+      setFrameIndex((previous) => {
+        if (previous + 1 < frames.length) {
+          return previous + 1;
+        }
+
+        return previous;
+      });
     }, FRAME_DURATION_MS);
 
-    currentTimers.fade = setTimeout(() => setFading(true), totalDuration - FADE_LEAD_MS);
+    timers.current.music = setTimeout(() => {
+      startAudioWithFade().catch(() => {
+        setNeedsUserAudio(true);
+      });
+    }, MUSIC_DELAY_MS);
 
-    const scheduleMusic = (delay: number) => {
-      currentTimers.music = setTimeout(() => {
-        startAudioWithFade().catch(() => {
-          // Playback blocked: prompt user
-          setNeedsUserAudio(true);
-        });
-      }, delay);
-    };
+    timers.current.fade = setTimeout(() => {
+      setFading(true);
+    }, totalDuration - FADE_LEAD_MS);
 
-    scheduleMusic(MUSIC_DELAY_MS);
-
-    currentTimers.hide = setTimeout(() => {
+    timers.current.hide = setTimeout(() => {
       fadeOutAndStop().finally(() => {
         setVisible(false);
         onComplete?.();
@@ -198,91 +254,175 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
     }, totalDuration);
 
     return () => {
-      if (currentTimers.cycle) clearInterval(currentTimers.cycle);
-      if (currentTimers.fade) clearTimeout(currentTimers.fade);
-      if (currentTimers.hide) clearTimeout(currentTimers.hide);
-      if (currentTimers.music) clearTimeout(currentTimers.music);
-      if (currentTimers.fadeIn) clearInterval(currentTimers.fadeIn);
-      if (currentTimers.fadeOut) clearInterval(currentTimers.fadeOut);
+      clearSequenceTimers();
+      clearFadeOut();
+
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
+        audioRef.current = null;
       }
     };
   }, [onComplete]);
 
   const skip = () => {
-    if (!visible) return;
-    if (timers.current.cycle) clearInterval(timers.current.cycle);
-    if (timers.current.fade) clearTimeout(timers.current.fade);
-    if (timers.current.hide) clearTimeout(timers.current.hide);
-    if (timers.current.music) clearTimeout(timers.current.music);
-    if (timers.current.fadeIn) clearInterval(timers.current.fadeIn);
-    if (timers.current.fadeOut) clearInterval(timers.current.fadeOut);
-    if (audioRef.current) {
-      fadeOutAndStop().finally(() => {
-        setVisible(false);
-        onComplete?.();
-      });
+    if (!visible) {
       return;
     }
-    setVisible(false);
-    onComplete?.();
+
+    clearSequenceTimers();
+
+    fadeOutAndStop().finally(() => {
+      setFading(true);
+
+      window.setTimeout(() => {
+        setVisible(false);
+        onComplete?.();
+      }, 250);
+    });
   };
 
   const enableAudioNow = () => {
-    if (!audioRef.current) return;
-
-    // Cancel any pending timers and start immediately (user gesture present).
-    if (timers.current.music) clearTimeout(timers.current.music);
-    if (timers.current.fadeIn) {
-      clearInterval(timers.current.fadeIn);
-      timers.current.fadeIn = undefined;
+    if (!audioRef.current) {
+      return;
     }
 
-    startAudioWithFade().catch(() => setNeedsUserAudio(true));
+    if (timers.current.music) {
+      clearTimeout(timers.current.music);
+      timers.current.music = undefined;
+    }
+
+    startAudioWithFade().catch(() => {
+      setNeedsUserAudio(true);
+    });
   };
 
-  if (!visible) return null;
+  if (!visible) {
+    return null;
+  }
 
   const frame = frames[frameIndex];
 
   return (
     <div
-      className={`entry-cutscene${fading ? " entry-cutscene--fade" : ""}`}
-      aria-hidden="true"
+      className={`entry-cutscene entry-cutscene--${frame.tone}${
+        fading ? " entry-cutscene--fade" : ""
+      }`}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Darkelf introduction"
     >
-      <video
-        className="entry-cutscene__video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
+      <div
+        className="entry-cutscene__environment"
+        aria-hidden="true"
       >
-        <source src={asset("/cyber_orange.mp4")} type="video/mp4" />
-      </video>
-      <div className="entry-cutscene__overlay" />
+        <div className="entry-cutscene__aura entry-cutscene__aura--purple" />
+        <div className="entry-cutscene__aura entry-cutscene__aura--green" />
+
+        <div className="entry-cutscene__grid" />
+        <div className="entry-cutscene__scan" />
+
+        <div className="entry-cutscene__crosshair entry-cutscene__crosshair--one">
+          <span />
+        </div>
+
+        <div className="entry-cutscene__crosshair entry-cutscene__crosshair--two">
+          <span />
+        </div>
+
+        <div className="entry-cutscene__edge entry-cutscene__edge--tl" />
+        <div className="entry-cutscene__edge entry-cutscene__edge--tr" />
+        <div className="entry-cutscene__edge entry-cutscene__edge--bl" />
+        <div className="entry-cutscene__edge entry-cutscene__edge--br" />
+
+        <div className="entry-cutscene__noise" />
+      </div>
+
+      <div className="entry-cutscene__brand" aria-hidden="true">
+        <span className="entry-cutscene__brand-mark">
+          DARKELF
+        </span>
+
+        <span className="entry-cutscene__brand-line" />
+
+        <span className="entry-cutscene__brand-status">
+          SYSTEM ONLINE
+        </span>
+      </div>
+
       <div className="entry-cutscene__content">
-        <div className="entry-cutscene__frame" key={frameIndex}>
-          <span className="entry-cutscene__label">{frame.label}</span>
+        <div
+          className="entry-cutscene__frame"
+          key={frameIndex}
+        >
+          <div className="entry-cutscene__frame-meta">
+            <span className="entry-cutscene__index">
+              {frame.index}
+            </span>
+
+            <span className="entry-cutscene__label">
+              {frame.label}
+            </span>
+          </div>
+
           <h2>{frame.title}</h2>
+
           <p>{frame.body}</p>
+
+          <div
+            className="entry-cutscene__signal"
+            aria-hidden="true"
+          >
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
       </div>
-      <button type="button" className="entry-cutscene__skip" onClick={skip}>
-        Skip intro →
-      </button>
-      {needsUserAudio && (
+
+      <div
+        className="entry-cutscene__progress"
+        aria-hidden="true"
+      >
+        {frames.map((item, index) => (
+          <span
+            key={item.index}
+            className={
+              index <= frameIndex
+                ? "entry-cutscene__progress-item entry-cutscene__progress-item--active"
+                : "entry-cutscene__progress-item"
+            }
+          />
+        ))}
+      </div>
+
+      <div className="entry-cutscene__controls">
+        {needsUserAudio && (
+          <button
+            type="button"
+            className="entry-cutscene__audio"
+            onClick={enableAudioNow}
+            aria-label="Enable intro audio"
+          >
+            <i
+              className="bi bi-volume-up"
+              aria-hidden="true"
+            />
+            Enable sound
+          </button>
+        )}
+
         <button
           type="button"
-          className="entry-cutscene__audio"
-          onClick={enableAudioNow}
-          aria-label="Enable intro audio"
+          className="entry-cutscene__skip"
+          onClick={skip}
         >
-          Enable sound
+          Skip intro
+          <span aria-hidden="true">→</span>
         </button>
-      )}
+      </div>
     </div>
   );
 }
