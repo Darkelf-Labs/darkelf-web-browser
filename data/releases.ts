@@ -156,7 +156,7 @@ pip install darkelf-cocoa
   {
     product: "shadow",
     channel: "stable",
-    version: "7.0.10",
+    version: "7.0.11",
     dateISO: "2026-09-25",
 
     releasePageUrl:
@@ -271,15 +271,15 @@ as a DMG release.
         fileType: "dmg",
 
         url:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.10/Darkelf-Shadow-7.0.10.dmg",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/download/v.7.0.11/Darkelf-Shadow-7.0.11.dmg",
 
         sizeBytes: 249561088,
 
         sha256:
-          "26f15be78dee0235924f1170cafb91e39959b9abaa4cc40516303549d9ef1e45",
+          "e2aae5d1d0b323d1cb64d6b68c7aa1a7877e39f155ffd35733bd5944e1921688",
 
         notesUrl:
-          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.10",
+          "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases/tag/v.7.0.11",
       },
     ],
   },
