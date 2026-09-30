@@ -9,12 +9,13 @@ export default function SplashPage() {
 
   const goHome = () => router.replace("/home");
 
-  // Fallback: if something stalls, still redirect after the extended intro window
+  // Fallback: if the intro stalls, redirect shortly after the 4-second sequence
   useEffect(() => {
-    const fallback = setTimeout(goHome, 68000);
+    const fallback = setTimeout(goHome, 5000);
     return () => clearTimeout(fallback);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <EntryCutscene onComplete={goHome} />;
 }
+
