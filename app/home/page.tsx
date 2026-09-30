@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
-import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: "Darkelf Labs — Privacy-First Browsers & Security Tools",
@@ -34,29 +33,13 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <div className="entry-bg-video-wrap" aria-hidden="true">
-        <video
-          className="entry-bg-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        >
-          <source src={asset("/cyber_orange.mp4")} type="video/mp4" />
-        </video>
-        <div className="entry-bg-overlay" />
-      </div>
-
-      <div className="orb one" aria-hidden="true" />
-      <div className="orb two" aria-hidden="true" />
-      <div className="orb three" aria-hidden="true" />
+      <div className="darkelf-home-backdrop" aria-hidden="true" />
 
       <Nav activePath="/home" />
 
-      <main>
+      <main className="darkelf-home">
         <section
-          className="entry-hero section"
+          className="entry-hero section darkelf-hero"
           aria-labelledby="entry-title"
         >
           <div className="eyebrow">
@@ -64,43 +47,67 @@ export default function HomePage() {
             <span>PRIVACY • SECURITY • OPEN SOURCE</span>
           </div>
 
-          <h1 id="entry-title" className="entry-hero__title">
+          <h1 id="entry-title" className="entry-hero__title darkelf-title">
             Darkelf Labs
           </h1>
 
-          <p className="entry-hero__sub">
+          <p className="entry-hero__sub darkelf-hero-copy">
             Open-source privacy and security software engineered to reduce
             tracking, strengthen browser privacy, and give users greater
             control over their browsing environment.
           </p>
 
           <div className="entry-hero__actions">
-            <Link href="/download-center" className="btn primary">
+            <Link
+              href="/download-center"
+              className="btn primary darkelf-main-cta"
+            >
               <i className="bi bi-download" aria-hidden="true" />
-              Go to Download Center
+              Download Center
             </Link>
 
-            <Link href="/security" className="btn">
+            <Link href="/security" className="btn darkelf-secondary-cta">
               <i className="bi bi-shield-check" aria-hidden="true" />
               Security Features
             </Link>
+          </div>
+
+          <div className="darkelf-tech-line" aria-hidden="true">
+            <span />
+            <strong>SHADOW</strong>
+            <span />
+            <strong>COCOA</strong>
+            <span />
           </div>
         </section>
 
         <section className="section" aria-labelledby="browsers-title">
           <div className="section-title">
-            <h2 id="browsers-title">Darkelf Browsers</h2>
+            <span className="darkelf-section-kicker">THE BROWSERS</span>
+            <h2 id="browsers-title">Choose your Darkelf</h2>
             <p>
-              Two privacy-focused browsers built around different browser
-              technologies while sharing the Darkelf security philosophy.
+              Two privacy-focused browsers built on different technologies
+              while sharing the same privacy-first philosophy.
             </p>
           </div>
 
-          <div className="grid entry-grid browser-grid">
-            <div className="card">
-              <i className="bi bi-shield-lock" aria-hidden="true" />
+          <div className="grid browser-grid darkelf-browser-grid">
+            <article className="card darkelf-product darkelf-product--shadow">
+              <div className="darkelf-product__top">
+                <div
+                  className="darkelf-product__icon darkelf-product__icon--shadow"
+                  aria-hidden="true"
+                >
+                  <i className="bi bi-shield-lock" />
+                </div>
 
-              <h3>Darkelf Shadow</h3>
+                <div>
+                  <span className="darkelf-product__type">
+                    QtWebEngine Browser
+                  </span>
+                  <h3>Darkelf Shadow</h3>
+                </div>
+              </div>
 
               <p>
                 The flagship Darkelf privacy browser. Built with PySide6 and
@@ -109,16 +116,37 @@ export default function HomePage() {
                 and an ephemeral browsing architecture.
               </p>
 
-              <Link href="/download-center" className="btn primary">
+              <div className="darkelf-product__tags" aria-label="Shadow features">
+                <span>QtWebEngine</span>
+                <span>Anti-Fingerprinting</span>
+                <span>Ephemeral</span>
+              </div>
+
+              <Link
+                href="/download-center"
+                className="btn darkelf-product__button darkelf-product__button--shadow"
+              >
                 <i className="bi bi-download" aria-hidden="true" />
                 Get Darkelf Shadow
               </Link>
-            </div>
+            </article>
 
-            <div className="card">
-              <i className="bi bi-apple" aria-hidden="true" />
+            <article className="card darkelf-product darkelf-product--cocoa">
+              <div className="darkelf-product__top">
+                <div
+                  className="darkelf-product__icon darkelf-product__icon--cocoa"
+                  aria-hidden="true"
+                >
+                  <i className="bi bi-apple" />
+                </div>
 
-              <h3>Darkelf Cocoa</h3>
+                <div>
+                  <span className="darkelf-product__type">
+                    Native macOS Browser
+                  </span>
+                  <h3>Darkelf Cocoa</h3>
+                </div>
+              </div>
 
               <p>
                 A lightweight native macOS privacy browser built with Cocoa,
@@ -126,18 +154,27 @@ export default function HomePage() {
                 for users who prefer Apple&apos;s native browser technology.
               </p>
 
-              <Link href="/download-center" className="btn">
-                <i className="bi bi-box-arrow-down" aria-hidden="true" />
+              <div className="darkelf-product__tags" aria-label="Cocoa features">
+                <span>WebKit</span>
+                <span>Native macOS</span>
+                <span>Lightweight</span>
+              </div>
+
+              <Link
+                href="/download-center"
+                className="btn darkelf-product__button darkelf-product__button--cocoa"
+              >
+                <i className="bi bi-download" aria-hidden="true" />
                 Get Darkelf Cocoa
               </Link>
-            </div>
+            </article>
           </div>
         </section>
 
         <section className="section" aria-labelledby="mission-title">
           <div className="section-title">
-            <h2 id="mission-title">Mission & Drive</h2>
-
+            <span className="darkelf-section-kicker">ENGINEERING PRINCIPLES</span>
+            <h2 id="mission-title">Privacy without unnecessary complexity</h2>
             <p>
               Darkelf Labs develops privacy-focused technology for users,
               researchers, analysts, and security professionals who want
@@ -145,32 +182,35 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid entry-grid">
-            <div className="card">
+          <div className="grid entry-grid darkelf-principles">
+            <article className="card darkelf-info-card">
+              <i className="bi bi-shield-check" aria-hidden="true" />
               <h3>Privacy by Design</h3>
               <p>
                 Privacy protections are integrated into the browser
                 architecture rather than treated as optional additions.
               </p>
-            </div>
+            </article>
 
-            <div className="card">
-              <h3>Research-Driven Development</h3>
+            <article className="card darkelf-info-card">
+              <i className="bi bi-cpu" aria-hidden="true" />
+              <h3>Research-Driven</h3>
               <p>
                 Darkelf evolves through practical security research,
-                compatibility testing, and continuous evaluation of modern
-                tracking and fingerprinting techniques.
+                compatibility testing, and evaluation of modern tracking and
+                fingerprinting techniques.
               </p>
-            </div>
+            </article>
 
-            <div className="card">
+            <article className="card darkelf-info-card">
+              <i className="bi bi-eye-slash" aria-hidden="true" />
               <h3>Ephemeral Browsing</h3>
               <p>
                 Session isolation and reduced persistence help minimize
                 residual browsing data while maintaining compatibility with
                 modern websites.
               </p>
-            </div>
+            </article>
           </div>
         </section>
 
@@ -179,18 +219,19 @@ export default function HomePage() {
           aria-labelledby="mindset-title"
         >
           <div className="section-title">
-            <h2 id="mindset-title">Security-Focused Mindset</h2>
+            <span className="darkelf-section-kicker">CORE PROTECTIONS</span>
+            <h2 id="mindset-title">Security-focused by default</h2>
             <p>
               Privacy and security controls are fundamental parts of the
               Darkelf browser architecture.
             </p>
           </div>
 
-          <div className="grid">
+          <div className="grid darkelf-security-grid">
             {[
               {
-                icon: "bi-shield-lock",
-                title: "Anti-Fingerprinting Controls",
+                icon: "bi-fingerprint",
+                title: "Anti-Fingerprinting",
                 body:
                   "Canvas, WebGL, WebRTC, and other identifying browser surfaces are protected to reduce fingerprinting and tracking exposure.",
               },
@@ -201,28 +242,30 @@ export default function HomePage() {
                   "Network filtering and declarative tracker blocking help prevent known advertising, analytics, telemetry, and tracking infrastructure from loading.",
               },
               {
-                icon: "bi-eye-slash",
-                title: "Ephemeral Privacy",
+                icon: "bi-incognito",
+                title: "Reduced Persistence",
                 body:
                   "Darkelf minimizes persistent browsing state and limits unnecessary storage of cookies, cache, history, and other session data.",
               },
             ].map((item) => (
-              <div className="card" key={item.title}>
+              <article className="card darkelf-security-card" key={item.title}>
                 <i className={`bi ${item.icon}`} aria-hidden="true" />
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </div>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+              </article>
             ))}
           </div>
         </section>
 
         <section
-          className="section entry-legal"
+          className="section entry-legal darkelf-open-source"
           aria-labelledby="lawful-title"
         >
-          <div className="section-title">
-            <h2 id="lawful-title">Open Source & Responsible Use</h2>
-
+          <div>
+            <span className="darkelf-section-kicker">OPEN SOURCE</span>
+            <h2 id="lawful-title">Inspect it. Verify it. Use it responsibly.</h2>
             <p>
               Darkelf software is developed for privacy, security research,
               education, and legitimate professional use. Users remain
@@ -232,17 +275,17 @@ export default function HomePage() {
           </div>
 
           <div className="entry-hero__actions">
-            <Link href="/download-center" className="btn primary">
-              <i
-                className="bi bi-arrow-right-circle"
-                aria-hidden="true"
-              />
-              Explore Darkelf Browsers
+            <Link
+              href="/download-center"
+              className="btn primary darkelf-main-cta"
+            >
+              <i className="bi bi-arrow-right-circle" aria-hidden="true" />
+              Explore Downloads
             </Link>
 
-            <Link href="/security" className="btn">
-              <i className="bi bi-shield-check" aria-hidden="true" />
-              Security Features
+            <Link href="/releases" className="btn darkelf-secondary-cta">
+              <i className="bi bi-box-seam" aria-hidden="true" />
+              Release History
             </Link>
           </div>
         </section>
