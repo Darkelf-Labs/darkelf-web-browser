@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { asset } from "@/lib/asset";
 
 const frames = [
@@ -83,21 +83,21 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const clearFadeIn = () => {
+  const clearFadeIn = useCallback(() => {
     if (timers.current.fadeIn) {
       clearInterval(timers.current.fadeIn);
       timers.current.fadeIn = undefined;
     }
-  };
+  }, []);
 
-  const clearFadeOut = () => {
+  const clearFadeOut = useCallback(() => {
     if (timers.current.fadeOut) {
       clearInterval(timers.current.fadeOut);
       timers.current.fadeOut = undefined;
     }
-  };
+  }, []);
 
-  const startAudioWithFade = () => {
+  const startAudioWithFade = useCallback(() => {
     const audio = audioRef.current;
 
     if (!audio) {
@@ -136,9 +136,9 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
         setNeedsUserAudio(true);
         throw error;
       });
-  };
+  }, [clearFadeIn, clearFadeOut]);
 
-  const fadeOutAndStop = (): Promise<void> => {
+  const fadeOutAndStop = useCallback((): Promise<void> => {
     const audio = audioRef.current;
 
     if (!audio) {
@@ -175,9 +175,9 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
         }
       }, 100);
     });
-  };
+  }, [clearFadeIn, clearFadeOut]);
 
-  const clearSequenceTimers = () => {
+  const clearSequenceTimers = useCallback(() => {
     if (timers.current.cycle) {
       clearInterval(timers.current.cycle);
       timers.current.cycle = undefined;
@@ -199,7 +199,7 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
     }
 
     clearFadeIn();
-  };
+  }, [clearFadeIn]);
 
   useEffect(() => {
     if (getSessionFlag(SESSION_KEY)) {
@@ -263,7 +263,13 @@ export function EntryCutscene({ onComplete }: EntryCutsceneProps) {
         audioRef.current = null;
       }
     };
-  }, [onComplete]);
+  }, [
+    clearFadeOut,
+    clearSequenceTimers,
+    fadeOutAndStop,
+    onComplete,
+    startAudioWithFade,
+  ]);
 
   const skip = () => {
     if (!visible) {
