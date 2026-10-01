@@ -15,7 +15,6 @@ updates:
 
     labels:
       - dependencies
-      - security
       - automated
 
     commit-message:
@@ -77,3 +76,4 @@ updates:
       - dependency-name: "next"
         update-types:
           - "version-update:semver-major"
+
