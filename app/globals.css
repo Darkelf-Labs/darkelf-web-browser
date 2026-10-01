@@ -2541,7 +2541,7 @@ header{
 }
 
 .darkelf-release-identity:last-child{
-  justify-content:flex-end;
+  justify-content:flex-start;
   text-align:left;
 }
 
@@ -2679,3 +2679,4 @@ header{
     justify-content:flex-start;
   }
 }
+
