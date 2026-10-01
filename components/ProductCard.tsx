@@ -5,7 +5,6 @@ import type {
 
 import {
   formatDate,
-  formatBytes,
   isAllowedDownloadUrl,
 } from "@/lib/releases";
 
@@ -239,13 +238,7 @@ export function ProductCard({
 
               <span>
                 Download macOS DMG
-                {typeof macDmg.sizeBytes ===
-                  "number" &&
-                macDmg.sizeBytes > 0
-                  ? ` — ${formatBytes(
-                      macDmg.sizeBytes
-                    )}`
-                  : ""}
+
               </span>
             </a>
           )}
@@ -306,3 +299,4 @@ export function ProductCard({
     </article>
   );
 }
+
