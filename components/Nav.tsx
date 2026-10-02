@@ -24,7 +24,7 @@ export function Nav({ activePath = "" }: NavProps) {
       <div className="nav">
         <Link className="brand" href="/home" aria-label="Darkelf Browser home">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={asset("/lock.png")} alt="Darkelf" width={32} height={32} style={{ borderRadius: '8px', objectFit: 'cover' }} />
+          <img src={asset("/logo.png")} alt="Darkelf" width={32} height={32} style={{ borderRadius: '8px', objectFit: 'cover' }} />
           <span>Darkelf Browser</span>
           <span className="badge">Mission + Security</span>
         </Link>
