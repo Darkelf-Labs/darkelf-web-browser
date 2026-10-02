@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { releases } from '@/data/releases';
 import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 // Self-hosted (bundled by Next, served from same origin) — no third-party CDN.
@@ -15,7 +16,15 @@ const siteTitle = 'Darkelf Browser — Privacy-First, Hardened, Non-Persistent';
 const siteDescription =
   'Darkelf Browser: open-source, hardened, non-persistent privacy browsers for macOS, Linux, and Windows. Anti-fingerprinting, Tor-native, post-quantum ready. Built for security researchers, journalists, OSINT analysts, and privacy advocates. Verify every build with SHA-256.';
 const siteUrl = 'https://darkelfbrowser.com';
-const ogImage = '/lock.png';
+const ogImage = '/icon.png';
+
+// Keep structured-data versions in sync with the site's release history.
+const cocoaRelease = releases.find(
+  (release) => release.product === 'cocoa' && release.channel === 'stable',
+);
+const shadowRelease = releases.find(
+  (release) => release.product === 'shadow' && release.channel === 'stable',
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -85,9 +94,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/lock.png',
+    icon: '/icon.png',
     shortcut: '/favicon.ico',
-    apple: '/lock.png',
+    apple: '/icon.png',
   },
   manifest: '/manifest.json',
   other: {
@@ -108,7 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@type': 'Organization',
     name: 'Darkelf Browser',
     url: siteUrl,
-    logo: `${siteUrl}/lock.png`,
+    logo: `${siteUrl}/logo.png`,
     description: siteDescription,
     foundingDate: '2024',
     founder: { '@type': 'Person', name: 'Dr. Kevin Moore' },
@@ -157,9 +166,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           operatingSystem: 'macOS',
           description: 'macOS-native Cocoa/WebKit privacy browser. Hardened, non-persistent, session-isolated. Secure Snapshot, TLS indicator, canvas hardening.',
           url: `${siteUrl}/`,
-          downloadUrl: 'https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/releases',
-          softwareVersion: '4.3',
-          releaseNotes: `${siteUrl}/releases/cocoa/4.3`,
+          downloadUrl: 'https://pypi.org/project/darkelf-cocoa/',
+          softwareVersion: cocoaRelease?.version,
+          releaseNotes: cocoaRelease
+            ? `${siteUrl}/releases/cocoa/${cocoaRelease.version}`
+            : undefined,
           license: 'https://opensource.org/licenses/MIT',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         },
@@ -171,11 +182,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           '@type': 'SoftwareApplication',
           name: 'Darkelf Shadow',
           applicationCategory: 'BrowserApplication',
-          operatingSystem: 'Linux, Windows',
+          operatingSystem: 'macOS, Linux, Windows',
           description: 'PySide6/QtWebEngine privacy browser for Linux and Windows. Hardened sandbox, request interception, no persistence, no WebRTC.',
           url: `${siteUrl}/`,
-          downloadUrl: 'https://github.com/Darkelf2024/Darkelf-Shadow/releases',
-          softwareVersion: '0.1.0-nightly',
+          downloadUrl: 'https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases',
+          softwareVersion: shadowRelease?.version,
+          releaseNotes: shadowRelease
+            ? `${siteUrl}/releases/shadow/${shadowRelease.version}`
+            : undefined,
           license: 'https://opensource.org/licenses/MIT',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         },
@@ -208,7 +222,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'What is Darkelf Browser?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Darkelf Browser is a suite of open-source, hardened, non-persistent privacy browsers and tools built for security researchers, journalists, OSINT analysts, and privacy advocates. Products include Darkelf Cocoa (macOS), Darkelf Shadow (Linux/Windows), and Darkelf OSINT AI.',
+          text: 'Darkelf Browser is a suite of open-source, hardened, non-persistent privacy browsers and tools built for security researchers, journalists, OSINT analysts, and privacy advocates. Products include Darkelf Cocoa (macOS), Darkelf Shadow (macOS/Linux/Windows), and Darkelf OSINT AI.',
         },
       },
       {
@@ -224,7 +238,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'What platforms does Darkelf Browser support?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Darkelf Cocoa is macOS-only. Darkelf Shadow supports Linux and Windows. Darkelf OSINT AI supports Windows, Linux, and macOS.',
+          text: 'Darkelf Cocoa is macOS-only. Darkelf Shadow supports macOS, Linux, and Windows. Darkelf OSINT AI supports Windows, Linux, and macOS.',
         },
       },
       {
