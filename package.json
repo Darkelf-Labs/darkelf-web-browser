@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "sync:releases": "node scripts/sync-releases.mjs",
+    "predev": "npm run sync:releases",
     "dev": "next dev",
+    "prebuild": "npm run sync:releases",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --max-warnings=0",
