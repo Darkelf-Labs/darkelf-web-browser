@@ -14,6 +14,7 @@ export function Nav({ activePath = "" }: NavProps) {
     { href: "/home", label: "Home" },
     { href: "/download-center", label: "Download" },
     { href: "/releases", label: "Releases" },
+    { href: "/gallery", label: "Gallery" },
     { href: "/security", label: "Security" },
   ];
 
