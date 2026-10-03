@@ -11,6 +11,9 @@ on:
 
   workflow_dispatch:
 
+  repository_dispatch:
+    types: [shadow-release-updated]
+
 permissions:
   contents: read
 
@@ -88,6 +91,11 @@ jobs:
       - name: Security Audit
         run: npm audit --audit-level=high
         continue-on-error: true
+
+      - name: Sync published Shadow release
+        run: node scripts/sync-releases.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run ESLint
         run: npm run lint
