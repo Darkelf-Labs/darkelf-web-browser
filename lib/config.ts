@@ -10,19 +10,19 @@ export const ALLOWED_DOWNLOAD_HOSTNAMES: ReadonlySet<string> = new Set([
   "objects.githubusercontent.com",
 ]);
 
-// TODO: Replace slugs once real repos are created
+// Current Darkelf Labs product repositories
 export const REPO_CONFIG = {
   cocoa: {
-    org: "Darkelf2024",
+    org: "Darkelf-Labs",
     repo: "Darkelf-Cocoa-Browser",
-    url: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser",
-    releasesUrl: "https://github.com/Darkelf2024/Darkelf-Cocoa-Browser/releases",
+    url: "https://github.com/Darkelf-Labs/Darkelf-Cocoa-Browser",
+    releasesUrl: "https://github.com/Darkelf-Labs/Darkelf-Cocoa-Browser/releases",
   },
   shadow: {
-    org: "Darkelf2024",
+    org: "Darkelf-Labs",
     repo: "Darkelf-Shadow-CE",
-    url: "https://github.com/Darkelf2024/Darkelf-Shadow-CE",
-    releasesUrl: "https://github.com/Darkelf2024/Darkelf-Shadow-CE/releases",
+    url: "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE",
+    releasesUrl: "https://github.com/Darkelf-Labs/Darkelf-Shadow-CE/releases",
   },
 } as const;
 
@@ -45,3 +45,4 @@ export const PRODUCT_META = {
     colorRgb: "0,234,255",
   },
 } as const;
+
