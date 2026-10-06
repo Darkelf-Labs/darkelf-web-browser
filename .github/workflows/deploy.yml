@@ -12,7 +12,9 @@ on:
   workflow_dispatch:
 
   repository_dispatch:
-    types: [shadow-release-updated]
+    types:
+      - shadow-release-updated
+      - cocoa-release-updated
 
 permissions:
   contents: read
@@ -92,7 +94,7 @@ jobs:
         run: npm audit --audit-level=high
         continue-on-error: true
 
-      - name: Sync published Shadow release
+      - name: Sync published releases
         run: node scripts/sync-releases.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
