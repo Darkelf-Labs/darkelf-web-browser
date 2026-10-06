@@ -72,17 +72,17 @@ export function ProductCard({
     ) ?? [];
 
   /*
-   * Shadow currently has one directly downloadable binary:
-   * the signed macOS DMG.
+   * Direct macOS DMG download.
+   *
+   * Both Darkelf Cocoa and Darkelf Shadow can expose a signed
+   * macOS DMG when one is present in their release artifacts.
    */
   const macDmg =
-    productId === "shadow"
-      ? downloadableArtifacts.find(
-          (artifact) =>
-            artifact.platform === "macos" &&
-            artifact.fileType === "dmg"
-        )
-      : undefined;
+    downloadableArtifacts.find(
+      (artifact) =>
+        artifact.platform === "macos" &&
+        artifact.fileType === "dmg"
+    );
 
   const pipCommand =
     productId === "shadow"
@@ -218,7 +218,7 @@ export function ProductCard({
             </div>
           </div>
 
-          {/* Shadow macOS DMG */}
+          {/* macOS DMG */}
           {macDmg && (
             <a
               className={`btn primary dl-cta ${
