@@ -3,8 +3,8 @@ import { fileURLToPath } from "node:url";
 import process from "node:process";
 import { log, error } from "node:console";
 
-const repository = "Darkelf-Labs/Darkelf-Shadow-CE";
-const api = `https://api.github.com/repos/${repository}`;
+const shadowRepository = "Darkelf-Labs/Darkelf-Shadow-CE";
+const cocoaRepository = "Darkelf-Labs/Darkelf-Cocoa-Browser";
 
 export function versionOf(tag) {
   return typeof tag === "string"
@@ -37,7 +37,7 @@ function checkedUrl(value, prefix) {
   return value;
 }
 
-function highlightsFrom(notes, version) {
+function highlightsFrom(notes, fallback) {
   let inCode = false;
   const highlights = [];
 
@@ -59,43 +59,67 @@ function highlightsFrom(notes, version) {
     if (highlights.length === 6) break;
   }
 
-  return highlights.length
-    ? highlights
-    : [`Darkelf Shadow ${version}`];
+  return highlights.length ? highlights : [fallback];
 }
 
-export function buildShadowRelease(input) {
+function selectStableRelease(input, productName) {
   if (!Array.isArray(input)) {
-    throw new Error("Invalid GitHub release response.");
+    throw new Error(`Invalid GitHub release response for ${productName}.`);
   }
 
   const stable = input
-    .filter((item) =>
-      item &&
-      !item.draft &&
-      !item.prerelease &&
-      versionOf(item.tag_name)
+    .filter(
+      (item) =>
+        item &&
+        !item.draft &&
+        !item.prerelease &&
+        versionOf(item.tag_name)
     )
     .sort(compareVersions);
 
-  const release = stable[0];
-
-  if (!release) {
-    throw new Error("No published stable Shadow release found.");
+  if (!stable[0]) {
+    throw new Error(`No published stable ${productName} release found.`);
   }
 
-  const version = versionOf(release.tag_name);
-  const filename = `Darkelf-Shadow-${version}.dmg`;
+  return stable[0];
+}
 
-  const dmg = release.assets?.find((asset) =>
-    asset.name === filename && asset.state === "uploaded"
+function publishedDate(release) {
+  const published = new Date(release.published_at);
+
+  if (!Number.isFinite(published.getTime())) {
+    throw new Error("Invalid publication date.");
+  }
+
+  return published.toISOString().slice(0, 10);
+}
+
+function releaseNotes(release) {
+  const notes = typeof release.body === "string" ? release.body : "";
+
+  if (!notes.trim()) {
+    throw new Error("Add release notes before publishing the release.");
+  }
+
+  return notes;
+}
+
+function findDmg(release, filename) {
+  const dmg = release.assets?.find(
+    (asset) => asset.name === filename && asset.state === "uploaded"
   );
 
   if (!dmg || !Number.isSafeInteger(dmg.size) || dmg.size <= 0) {
     throw new Error(
-      `Newest stable release ${version} needs a finished ${filename} asset.`
+      `Newest stable release ${versionOf(release.tag_name)} needs a finished ${filename} asset.`
     );
   }
+
+  return dmg;
+}
+
+function releaseUrls(repository, release, filename, dmg) {
+  const api = `https://api.github.com/repos/${repository}`;
 
   const releasePageUrl = checkedUrl(
     release.html_url,
@@ -119,49 +143,107 @@ export function buildShadowRelease(input) {
     );
   }
 
-  const published = new Date(release.published_at);
+  return {
+    releasePageUrl,
+    downloadUrl,
+    zipballUrl: checkedUrl(
+      release.zipball_url,
+      `${api}/zipball/`
+    ),
+  };
+}
 
-  if (!Number.isFinite(published.getTime())) {
-    throw new Error("Invalid publication date.");
-  }
+export function buildShadowRelease(input) {
+  const release = selectStableRelease(input, "Shadow");
+  const version = versionOf(release.tag_name);
 
-  const notes =
-    typeof release.body === "string" ? release.body : "";
+  const filename = `Darkelf-Shadow-${version}.dmg`;
+  const dmg = findDmg(release, filename);
 
-  if (!notes.trim()) {
-    throw new Error("Add release notes before publishing the release.");
-  }
+  const urls = releaseUrls(
+    shadowRepository,
+    release,
+    filename,
+    dmg
+  );
 
-  const artifacts = ["macos", "windows", "linux"].map((platform) => ({
-    platform,
-    arch: "any",
-    fileType: "pypi",
-    url: "",
-    installCommand: "pip install --upgrade darkelf-shadow",
-  }));
+  const notes = releaseNotes(release);
+
+  const artifacts = ["macos", "windows", "linux"].map(
+    (platform) => ({
+      platform,
+      arch: "any",
+      fileType: "pypi",
+      url: "",
+      installCommand:
+        "pip install --upgrade darkelf-shadow",
+    })
+  );
 
   artifacts.push({
     platform: "macos",
     arch: "arm64",
     fileType: "dmg",
-    url: downloadUrl,
+    url: urls.downloadUrl,
     sizeBytes: dmg.size,
-    notesUrl: releasePageUrl,
+    notesUrl: urls.releasePageUrl,
   });
 
   return {
     product: "shadow",
     channel: "stable",
     version,
-    dateISO: published.toISOString().slice(0, 10),
-    releasePageUrl,
-    zipballUrl: checkedUrl(
-      release.zipball_url,
-      `${api}/zipball/`
+    dateISO: publishedDate(release),
+    releasePageUrl: urls.releasePageUrl,
+    zipballUrl: urls.zipballUrl,
+    highlights: highlightsFrom(
+      notes,
+      `Darkelf Shadow ${version}`
     ),
-    highlights: highlightsFrom(notes, version),
     notesMarkdown: notes,
     artifacts,
+  };
+}
+
+export function buildCocoaRelease(input) {
+  const release = selectStableRelease(input, "Cocoa");
+  const version = versionOf(release.tag_name);
+
+  const filename = `Darkelf-Cocoa-${version}.dmg`;
+  const dmg = findDmg(release, filename);
+
+  const urls = releaseUrls(
+    cocoaRepository,
+    release,
+    filename,
+    dmg
+  );
+
+  const notes = releaseNotes(release);
+
+  return {
+    product: "cocoa",
+    channel: "stable",
+    version,
+    dateISO: publishedDate(release),
+    releasePageUrl: urls.releasePageUrl,
+    zipballUrl: urls.zipballUrl,
+    highlights: highlightsFrom(
+      notes,
+      `Darkelf Cocoa ${version}`
+    ),
+    notesMarkdown: notes,
+
+    artifacts: [
+      {
+        platform: "macos",
+        arch: "any",
+        fileType: "dmg",
+        url: urls.downloadUrl,
+        sizeBytes: dmg.size,
+        notesUrl: urls.releasePageUrl,
+      },
+    ],
   };
 }
 
@@ -173,7 +255,8 @@ async function getJson(url) {
   };
 
   if (process.env.GITHUB_TOKEN) {
-    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    headers.Authorization =
+      `Bearer ${process.env.GITHUB_TOKEN}`;
   }
 
   const response = await globalThis.fetch(url, {
@@ -191,7 +274,10 @@ async function getJson(url) {
   return response.json();
 }
 
-async function main() {
+async function getPublishedReleases(repository) {
+  const api =
+    `https://api.github.com/repos/${repository}`;
+
   const releases = [];
 
   for (let page = 1; page <= 10; page += 1) {
@@ -200,7 +286,9 @@ async function main() {
     );
 
     if (!Array.isArray(batch)) {
-      throw new Error("Invalid GitHub release list.");
+      throw new Error(
+        `Invalid GitHub release list for ${repository}.`
+      );
     }
 
     releases.push(...batch);
@@ -208,19 +296,31 @@ async function main() {
     if (batch.length < 100) break;
 
     if (page === 10) {
-      throw new Error("Release list exceeded the pagination limit.");
+      throw new Error(
+        `Release list exceeded pagination limit for ${repository}.`
+      );
     }
   }
 
-  const selected = buildShadowRelease(releases);
-  const directory = new URL("../data/", import.meta.url);
-  const output = new URL("shadow-release.generated.json", directory);
-  const temporary = new URL(
-    "shadow-release.generated.json.tmp",
-    directory
-  );
+  return releases;
+}
 
-  await mkdir(directory, { recursive: true });
+async function writeGeneratedRelease(
+  filename,
+  selected
+) {
+  const directory =
+    new URL("../data/", import.meta.url);
+
+  const output =
+    new URL(filename, directory);
+
+  const temporary =
+    new URL(`${filename}.tmp`, directory);
+
+  await mkdir(directory, {
+    recursive: true,
+  });
 
   await writeFile(
     temporary,
@@ -229,9 +329,39 @@ async function main() {
   );
 
   await rename(temporary, output);
+}
+
+async function main() {
+  const [shadowInput, cocoaInput] =
+    await Promise.all([
+      getPublishedReleases(shadowRepository),
+      getPublishedReleases(cocoaRepository),
+    ]);
+
+  const shadow =
+    buildShadowRelease(shadowInput);
+
+  const cocoa =
+    buildCocoaRelease(cocoaInput);
+
+  await Promise.all([
+    writeGeneratedRelease(
+      "shadow-release.generated.json",
+      shadow
+    ),
+
+    writeGeneratedRelease(
+      "cocoa-release.generated.json",
+      cocoa
+    ),
+  ]);
 
   log(
-    `Synced Darkelf Shadow ${selected.version} from its published GitHub release.`
+    `Synced Darkelf Shadow ${shadow.version} from its published GitHub release.`
+  );
+
+  log(
+    `Synced Darkelf Cocoa ${cocoa.version} from its published GitHub release.`
   );
 }
 
