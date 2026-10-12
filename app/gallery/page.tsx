@@ -33,7 +33,7 @@ const screenshots = [
     name: "Darkelf Cocoa",
     technology: "Cocoa & WebKit • Native macOS",
     icon: "bi-apple",
-    image: "/gallery/cocoa-homepage-v7.1.2,
+    image: "/gallery/cocoa-homepage-v7.1.2.png,
     alt: "Darkelf Cocoa browser showing its homepage",
     description:
       "The Cocoa homepage and native macOS browser interface, built with WebKit and PyObjC.",
