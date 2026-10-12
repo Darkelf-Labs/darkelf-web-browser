@@ -42,58 +42,6 @@ body::after{
 
 main{position:relative;z-index:2}
 
-.home-bg-video-wrap{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.home-bg-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.28;
-  filter:saturate(1.05) brightness(.62) contrast(1.02);
-}
-.home-bg-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(1100px 720px at 14% -10%, rgba(0,234,255,.16), transparent 70%),
-    radial-gradient(1000px 660px at 112% 0%, rgba(54,255,154,.14), transparent 72%),
-    radial-gradient(1100px 700px at 50% 120%, rgba(180,0,255,.14), transparent 72%),
-    linear-gradient(180deg, rgba(5,6,10,.18), rgba(5,6,10,.32));
-}
-
-.entry-bg-video-wrap{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.entry-bg-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.22;
-  filter:saturate(1.05) brightness(.56) contrast(1.06);
-}
-.entry-bg-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(1100px 760px at 15% -10%, rgba(255,152,0,.20), transparent 70%),
-    radial-gradient(980px 640px at 110% 2%, rgba(180,0,255,.12), transparent 72%),
-    radial-gradient(1200px 700px at 50% 120%, rgba(54,255,154,.10), transparent 72%),
-    linear-gradient(180deg, rgba(5,6,10,.16), rgba(5,6,10,.38));
-}
-
 /* ============================================================
    DARKELF ENTRY CUTSCENE — LIGHTWEIGHT BOOT SEQUENCE
    Shadow purple / Cocoa green identity. No video. No audio.
@@ -233,7 +181,6 @@ main{position:relative;z-index:2}
   .entry-cutscene__boot-status{opacity:1;transform:none}
 }
 
-
 .entry-hero{ text-align:center; padding-top:86px; }
 .entry-hero .eyebrow{
   justify-content:center;
@@ -323,58 +270,6 @@ main{position:relative;z-index:2}
     width:100%;
     white-space:normal;
   }
-}
-
-.releases-bg-video-wrap{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.releases-bg-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.25;
-  filter:saturate(1.02) brightness(.58) contrast(1.04);
-}
-.releases-bg-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(1200px 780px at 18% -12%, rgba(255,152,0,.17), transparent 70%),
-    radial-gradient(980px 640px at 108% 0%, rgba(0,234,255,.12), transparent 72%),
-    radial-gradient(1100px 700px at 50% 120%, rgba(54,255,154,.11), transparent 72%),
-    linear-gradient(180deg, rgba(5,6,10,.16), rgba(5,6,10,.34));
-}
-
-.security-bg-video-wrap{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.security-bg-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:.24;
-  filter:saturate(1.02) brightness(.56) contrast(1.04);
-}
-.security-bg-overlay{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(1200px 780px at 14% -12%, rgba(255,64,64,.17), transparent 70%),
-    radial-gradient(980px 640px at 108% 0%, rgba(180,0,255,.12), transparent 72%),
-    radial-gradient(1100px 700px at 50% 120%, rgba(0,234,255,.11), transparent 72%),
-    linear-gradient(180deg, rgba(5,6,10,.16), rgba(5,6,10,.36));
 }
 
 a{color:inherit}
@@ -1994,7 +1889,6 @@ footer .line{
 .dl-error__msg{margin:0;font-size:.95rem;color:rgba(255,255,255,.60)}
 .dl-error__actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 
-
 /* ============================================================
    LIQUID GLASS THEME
    Squared corners + frosted translucent surfaces + a cursor-
@@ -2152,7 +2046,6 @@ footer .line{
    - backdrop-filter
    - cursor-driven glass transforms
    - animated blurred orbs
-   - homepage background video
    - persistent will-change layers
    ============================================================ */
 
@@ -2173,11 +2066,6 @@ footer .line{
   display:none !important;
   animation:none !important;
   filter:none !important;
-}
-
-.entry-bg-video-wrap,
-.home-bg-video-wrap{
-  display:none !important;
 }
 
 .btn,
