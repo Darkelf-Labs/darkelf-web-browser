@@ -14,7 +14,7 @@ const mono = JetBrains_Mono({
 
 const siteTitle = 'Darkelf Browser — Privacy-First, Hardened, Non-Persistent';
 const siteDescription =
-  'Darkelf Browser: open-source, hardened, non-persistent privacy browsers for macOS, Linux, and Windows. Anti-fingerprinting, Tor-native, post-quantum ready. Built for security researchers, journalists, OSINT analysts, and privacy advocates. Verify every build with SHA-256.';
+  'Darkelf Browser: open-source, hardened, non-persistent privacy browsers for macOS, Linux, and Windows. Anti-fingerprinting, tracker protection, and reduced browsing persistence. Built for security researchers, privacy advocates, and everyday users.';
 const siteUrl = 'https://darkelfbrowser.com';
 const ogImage = '/icon.png';
 
@@ -122,14 +122,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     foundingDate: '2024',
     founder: { '@type': 'Person', name: 'Dr. Kevin Moore' },
     knowsAbout: [
-      'Privacy Browsers', 'Browser Security', 'Post-Quantum Cryptography',
-      'OSINT', 'Tor Network', 'Anti-Fingerprinting', 'Cybersecurity',
+      'Privacy Browsers', 'Browser Security', 'Tracker Protection',
+      'OSINT', 'Browser Privacy', 'Anti-Fingerprinting', 'Cybersecurity',
     ],
     sameAs: [
-      'https://github.com/Darkelf2024',
-      'https://github.com/Darkelf2024/Darkelf-Cocoa-Browser',
-      'https://github.com/Darkelf2024/Darkelf-Shadow',
-      'https://github.com/Darkelf2024/Darkelf-OSINT-Ai',
+      'https://github.com/Darkelf-Labs',
+      'https://github.com/Darkelf-Labs/Darkelf-Cocoa-Browser',
+      'https://github.com/Darkelf-Labs/Darkelf-Shadow-CE',
     ],
   } as const;
 
@@ -204,7 +203,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           operatingSystem: 'Windows, Linux, macOS',
           description: 'AI-powered Open-Source Intelligence assistant. Combines OSINT workflows with local Ollama AI reasoning. Modular, ethical, built for investigators.',
           url: `${siteUrl}/`,
-          downloadUrl: 'https://github.com/Darkelf2024/Darkelf-OSINT-Ai/releases',
+          downloadUrl: 'https://github.com/Darkelf-Labs',
           softwareVersion: '0.1.0-alpha',
           license: 'https://opensource.org/licenses/MIT',
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -230,7 +229,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'Is Darkelf Browser free?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. All Darkelf Browser products are free and open-source, released under the MIT license and available on GitHub.',
+          text: 'Darkelf Cocoa and Darkelf Shadow are available as open-source software. Consult each project repository for its current license and download options.',
         },
       },
       {
@@ -238,7 +237,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'What platforms does Darkelf Browser support?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Darkelf Cocoa is macOS-only. Darkelf Shadow supports macOS, Linux, and Windows. Darkelf OSINT AI supports Windows, Linux, and macOS.',
+          text: 'Darkelf Cocoa is macOS-only. Darkelf Shadow is developed for macOS, Linux, and Windows. Consult individual project releases for available builds.',
         },
       },
       {
@@ -246,7 +245,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'How do I verify a Darkelf Browser download?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Every Darkelf release is published with a SHA-256 checksum. On Windows use Get-FileHash; on Linux/macOS use sha256sum. Compare the output to the published hash on the release page before running the binary.',
+          text: 'Download Darkelf only from the official project links. When a release provides a checksum, calculate the downloaded file’s SHA-256 hash and compare it with the published value.',
         },
       },
       {
@@ -254,7 +253,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'Does Darkelf Browser support Tor?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'A Tor-native edition is temporarily offline while we refocus the product line. Current builds prioritize hardened networking on Cocoa and Shadow; Tor routing will return in a dedicated release.',
+          text: 'Darkelf Cocoa and Darkelf Shadow are privacy-focused browsers, not substitutes for Tor Browser. Check each product’s documentation for its currently supported network privacy features.',
         },
       },
       {
