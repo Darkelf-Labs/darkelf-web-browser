@@ -56,6 +56,16 @@ export function Nav({ activePath = "" }: NavProps) {
                 </Link>
               );
             })}
+            <a
+              className="btn"
+              href="https://km-consultant.pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenu}
+            >
+              <i className="bi bi-person-badge" aria-hidden="true" />
+              Dev Profile
+            </a>
           </div>
         </nav>
       </div>
