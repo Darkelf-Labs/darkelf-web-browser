@@ -39,7 +39,6 @@ export const metadata: Metadata = {
     'Darkelf Browser',
     'Darkelf Cocoa',
     'Darkelf Shadow',
-    'Darkelf OSINT AI',
     'privacy browser',
     'hardened browser',
     'non-persistent browser',
@@ -48,7 +47,6 @@ export const metadata: Metadata = {
     'macOS privacy browser',
     'Linux privacy browser',
     'Windows privacy browser',
-    'OSINT browser',
   ],
   authors: [{ name: 'Dr. Kevin Moore', url: siteUrl }],
   creator: 'Dr. Kevin Moore',
@@ -123,7 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     founder: { '@type': 'Person', name: 'Dr. Kevin Moore' },
     knowsAbout: [
       'Privacy Browsers', 'Browser Security', 'Tracker Protection',
-      'OSINT', 'Browser Privacy', 'Anti-Fingerprinting', 'Cybersecurity',
+      'Browser Privacy', 'Anti-Fingerprinting', 'Cybersecurity',
     ],
     sameAs: [
       'https://github.com/Darkelf-Labs',
@@ -140,20 +138,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     url: siteUrl,
     description: siteDescription,
     inLanguage: 'en-US',
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${siteUrl}/?q={search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
   } as const;
 
   const schemaSoftwareList = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Darkelf Browser Products',
-    description: 'Hardened, non-persistent, privacy-first browsers and tools for security researchers, journalists, and OSINT analysts.',
+    description: 'Hardened, non-persistent, privacy-first browsers for security researchers and privacy-conscious users.',
     url: siteUrl,
-    numberOfItems: 3,
+    numberOfItems: 2,
     itemListElement: [
       {
         '@type': 'ListItem',
@@ -193,22 +186,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         },
       },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        item: {
-          '@type': 'SoftwareApplication',
-          name: 'Darkelf OSINT AI',
-          applicationCategory: 'UtilitiesApplication',
-          operatingSystem: 'Windows, Linux, macOS',
-          description: 'AI-powered Open-Source Intelligence assistant. Combines OSINT workflows with local Ollama AI reasoning. Modular, ethical, built for investigators.',
-          url: `${siteUrl}/`,
-          downloadUrl: 'https://github.com/Darkelf-Labs',
-          softwareVersion: '0.1.0-alpha',
-          license: 'https://opensource.org/licenses/MIT',
-          offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        },
-      },
     ],
   } as const;
 
@@ -221,7 +198,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         name: 'What is Darkelf Browser?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Darkelf Browser is a suite of open-source, hardened, non-persistent privacy browsers and tools built for security researchers, journalists, OSINT analysts, and privacy advocates. Products include Darkelf Cocoa (macOS), Darkelf Shadow (macOS/Linux/Windows), and Darkelf OSINT AI.',
+          text: 'Darkelf Browser is a suite of open-source, hardened, non-persistent privacy browsers built for security researchers and privacy advocates. Products include Darkelf Cocoa (macOS) and Darkelf Shadow (macOS/Linux/Windows).',
         },
       },
       {
@@ -246,22 +223,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Download Darkelf only from the official project links. When a release provides a checksum, calculate the downloaded file’s SHA-256 hash and compare it with the published value.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'Does Darkelf Browser support Tor?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Darkelf Cocoa and Darkelf Shadow are privacy-focused browsers, not substitutes for Tor Browser. Check each product’s documentation for its currently supported network privacy features.',
-        },
-      },
-      {
-        '@type': 'Question',
-        name: 'What is Darkelf OSINT AI?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Darkelf OSINT AI is an AI-powered open-source intelligence assistant that combines traditional OSINT workflows with local AI reasoning via Ollama. It supports multi-source intelligence across domains, usernames, emails, IPs, and social platforms.',
         },
       },
     ],
