@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getLatestRelease } from "@/lib/releases";
 import { Nav } from "@/components/Nav";
 import { DownloadCenterClient } from "@/components/DownloadCenterClient";
-import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title:
@@ -44,20 +43,6 @@ export default function DownloadCenterPage() {
 
   return (
     <>
-      <div className="home-bg-video-wrap" aria-hidden="true">
-        <video
-          className="home-bg-video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-        >
-          <source src={asset("/cyber_blue.mp4")} type="video/mp4" />
-        </video>
-        <div className="home-bg-overlay" />
-      </div>
-
       <div className="orb one" aria-hidden="true" />
       <div className="orb two" aria-hidden="true" />
       <div className="orb three" aria-hidden="true" />
