@@ -1,8 +1,9 @@
+
 name: Darkelf Dependency Maintenance
 
 on:
   schedule:
-    # Weekly: Monday 06:00 UTC
+    # Every Monday at 06:00 UTC
     - cron: "0 6 * * 1"
   workflow_dispatch:
 
@@ -10,44 +11,93 @@ permissions:
   contents: write
   pull-requests: write
 
-# Prevent overlapping runs from racing each other
 concurrency:
   group: darkelf-dependency-maintenance
   cancel-in-progress: false
 
 jobs:
   dependency-maintenance:
-    name: Update dependencies and open PR
+    name: Update, validate, and open PR
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Checkout Browser Repository
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
+          persist-credentials: false
+
+      - name: Checkout Dependency Guardian
+        uses: actions/checkout@v5
+        with:
+          repository: Darkelf-Labs/Darkelf-Dependency-Guardian
+          ref: main
+          path: .guardian-tool
+          persist-credentials: false
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
 
       - name: Setup Node.js 24
         uses: actions/setup-node@v4
         with:
           node-version: "24"
-          cache: "npm"
+          cache: npm
 
-      - name: Install dependencies
+      - name: Install Dependency Guardian
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ./.guardian-tool
+          guardian --help
+          python -m pip show darkelf-dependency-guardian
+
+      - name: Verify Browser Manifest
+        run: |
+          test -f package.json
+          test -f package-lock.json
+
+      - name: Install Current Dependencies
         run: npm ci
 
-      - name: Update Next.js + React packages
-        run: npm install next@latest react@latest react-dom@latest
+      - name: Validate Current Project
+        run: guardian validate
 
-      - name: Update remaining dependencies
+      - name: Analyze Current Compatibility
+        run: guardian compatibility
+
+      - name: Review Safe Update Recommendations
+        run: guardian update
+
+      - name: Update Next.js and React
+        run: |
+          npm install next@latest react@latest react-dom@latest
+
+      - name: Update Remaining Dependencies
         run: npm update
 
-      - name: Show postcss dependency tree
-        run: npm ls postcss || true
+      - name: Verify Dependency Lockfile
+        run: npm ci
 
-      - name: Run production audit (non-blocking)
-        run: npm audit --omit=dev --audit-level=high || true
+      - name: Validate Updated Project
+        run: guardian validate
+
+      - name: Scan Updated Dependencies
+        run: guardian scan
+
+      - name: Analyze Updated Compatibility
+        run: guardian compatibility
+
+      - name: Check Dependency Health
+        run: guardian doctor
+
+      - name: Run Production Security Audit
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Check PostCSS Dependency Tree
+        run: npm ls postcss
 
       - name: Lint
         run: npm run lint
@@ -55,37 +105,74 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Create dependency update PR
+      - name: Generate Guardian Reports
+        if: always()
+        run: guardian report
+
+      - name: Upload Guardian Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: darkelf-dependency-maintenance-reports
+          path: |
+            .guardian/
+            reports/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove Temporary Guardian Checkout
+        if: success()
+        run: rm -rf .guardian-tool
+
+      - name: Create Dependency Update PR
+        if: success()
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.PAT }}
+
           commit-message: "chore(deps): automatic weekly dependency update"
+
           committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+
           author: "Darkelf2024 <174353864+Darkelf2024@users.noreply.github.com>"
+
           signoff: false
 
-          # Dedicated long-lived automation branch (no direct push to main)
           branch: "chore/weekly-dependency-maintenance"
-          base: "main"
+          base: main
           delete-branch: false
 
           title: "chore(deps): automatic weekly dependency update"
+
           body: |
             ## Summary
-            This automated PR updates project dependencies on a weekly schedule.
+            Automated weekly dependency maintenance for
+            Darkelf Web Browser.
 
-            ## Changes
-            - `npm install next@latest react@latest react-dom@latest`
-            - `npm update`
-            - Regenerated lockfile as needed
+            ## Updates
+            - Next.js
+            - React and React DOM
+            - Remaining npm dependencies
+            - package-lock.json
 
-            ## Validation run in workflow
-            - `npm run lint`
-            - `npm run build`
+            ## Darkelf Dependency Guardian
+            - Project validation
+            - Dependency scanning
+            - Framework compatibility analysis
+            - Dependency health checks
+            - Safe update recommendations
 
-            ## Notes
-            - `npm audit --omit=dev --audit-level=high` is currently non-blocking in CI (`|| true`).
-            - This PR is generated by GitHub Actions.
+            ## Additional Checks
+            - Clean npm installation
+            - Production npm security audit
+            - PostCSS dependency tree
+            - ESLint
+            - Next.js production build
+
+            All required checks must pass before this
+            pull request is created.
+
+            Review dependency changes before merging.
 
           labels: |
             dependencies
